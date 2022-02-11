@@ -3,11 +3,12 @@
   "private": true,
   "version": "0.1.0",
   "description": "A webapp for a community management platform, designed to fit the needs of retirement communities.",
+  "source": "public/index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel serve public/index.html",
+    "dev": "parcel serve",
     "build": "npm run build:functions && npm run build:webapp",
-    "build:webapp": "parcel build public/index.html",
+    "build:webapp": "npm run check && parcel build",
     "build:functions": "npm --prefix functions/ run build",
     "serve": "firebase emulators:start",
     "serve:functions": "npm --prefix functions/ run serve",
@@ -16,7 +17,9 @@
     "start": "npm run build && npm run serve",
     "clean": "npm run clean:debug && npm run clean:parcel",
     "clean:debug": "shx rm './**debug.log'",
-    "clean:parcel": "shx rm -rf .parcel-cache/ dist/"
+    "clean:parcel": "shx rm -rf .parcel-cache/ dist/",
+    "check": "tsc --noEmit",
+    "lint": "eslint"
   },
   "repository": {
     "type": "git",
@@ -42,15 +45,11 @@
   },
   "homepage": "https://github.com/ADolbyB/community-oasis-dashboard#readme",
   "dependencies": {
-    "@babel/preset-typescript": "^7.16.7",
     "firebase-tools": "^10.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.2",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
     "@types/node": "^17.0.17",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
@@ -74,5 +73,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "engines": {
+    "node": "16"
   }
 }
