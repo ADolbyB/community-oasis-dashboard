@@ -1,6 +1,11 @@
 import React from "react";
-import { render } from "react-dom";
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
 
-const Application: React.FunctionComponent<{}> = () => <h1>Tell me why</h1>;
-
-render(<Application />, document.getElementById("root"));
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
+);

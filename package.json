@@ -15,7 +15,7 @@
     "shell": "npm --prefix functions run shell",
     "deploy:functions": "npm --prefix functions run deploy",
     "start": "npm run build && npm run serve",
-    "clean": "npm run clean:debug && npm run clean:parcel",
+    "clean": "npm run clean:debug; npm run clean:parcel",
     "clean:debug": "shx rm './**debug.log'",
     "clean:parcel": "shx rm -rf .parcel-cache/ dist/",
     "check": "tsc --noEmit",
