@@ -4,7 +4,7 @@
     "target": "es2021",
     "strict": true,
     "moduleResolution": "Node",
-    "jsxImportSource": "react",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "jsx": "react"
   }
 }
