@@ -5,12 +5,15 @@
   "description": "A webapp for a community management platform, designed to fit the needs of retirement communities.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "parcel serve public/index.html",
-    "build": "parcel build public/index.html --dist-dir dist",
+    "dev": "parcel serve src/index.html",
+    "build": "npm run build:functions && npm run build:webapp",
+    "build:webapp": "parcel build src/index.html",
     "build:functions": "npm --prefix functions/ run build",
+    "serve": "firebase emulators:start",
     "serve:functions": "npm --prefix functions/ run serve",
     "shell": "npm --prefix functions run shell",
-    "deploy:functions": "npm --prefix functions run deploy"
+    "deploy:functions": "npm --prefix functions run deploy",
+    "start": "npm run build && npm run serve"
   },
   "repository": {
     "type": "git",
@@ -36,14 +39,16 @@
   },
   "homepage": "https://github.com/ADolbyB/community-oasis-dashboard#readme",
   "dependencies": {
+    "firebase-tools": "^10.2.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
     "@types/react": "^17.0.39",
     "@types/react-dom": "^17.0.11",
-    "babel-preset-env": "^1.7.0",
-    "babel-preset-react": "^6.24.1",
     "eslint": "^8.8.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
