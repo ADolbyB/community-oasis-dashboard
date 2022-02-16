@@ -37,7 +37,7 @@
     "Hakeem Johnson",
     "Joshua Lavieri",
     "Michael Mesquita",
-    "Sam 'Tell-Me-Your-Last-Name'"
+    "Sam Chowdhury"
   ],
   "license": "MIT",
   "bugs": {
@@ -45,9 +45,13 @@
   },
   "homepage": "https://github.com/ADolbyB/community-oasis-dashboard#readme",
   "dependencies": {
+    "dotenv": "^16.0.0",
+    "firebase": "^9.6.6",
     "firebase-tools": "^10.2.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-firebase-hooks": "^5.0.2",
+    "react-router-dom": "^6.2.1"
   },
   "devDependencies": {
     "@types/node": "^17.0.17",
