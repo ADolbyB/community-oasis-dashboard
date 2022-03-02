@@ -4,7 +4,7 @@ import "./App.css";
 
 /**
  * Starts the web application
- * @return {App} Web Application Mount Point
+ * @return {JSX.Element} Web Application Mount Point
  */
 function App() {
   return (

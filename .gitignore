@@ -68,3 +68,6 @@ node_modules/
 # Built apps
 dist/
 .parcel-cache/
+
+# Configuration Files
+.vscode/
