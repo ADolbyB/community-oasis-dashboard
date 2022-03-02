@@ -19,7 +19,8 @@
     "clean:debug": "shx rm './**debug.log'",
     "clean:parcel": "shx rm -rf .parcel-cache/ dist/",
     "check": "tsc --noEmit",
-    "lint": "eslint --ext js,ts,jsx,tsx src"
+    "lint": "eslint --ext js,ts,jsx,tsx src",
+    "fix": "eslint --ext js,ts,jsx,tsx --fix src"
   },
   "repository": {
     "type": "git",
