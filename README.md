@@ -5,7 +5,12 @@ Web app for CEN 4010 class project
 ## How to set-up dev environment
 
 - Install the dependencies, `npm install`
-- Because the firebase configuration files are all setup, all you have to do is install the firebase emulators, `firebase init emulators`. The default choices are perfect as is.
+- Because the firebase configuration files are all setup, all you have to do is install the firebase emulators, `firebase init emulators`. The default choices are perfect as is. You will install the:
+  - Authentication Emulator
+  - Functions Emulator
+  - Firestore Emulator
+  - Hosting Emulator
+  - Pub/sub Emulator
 
 ## Scripts
 
