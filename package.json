@@ -24,7 +24,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ADolbyB/community-oasis-dashboard.git"
+    "url": "git+https://github.com/Midlight25/community-oasis-dashboard.git"
   },
   "keywords": [
     "react",
@@ -42,9 +42,9 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/ADolbyB/community-oasis-dashboard/issues"
+    "url": "https://github.com/Midlight25/community-oasis-dashboard/issues"
   },
-  "homepage": "https://github.com/ADolbyB/community-oasis-dashboard#readme",
+  "homepage": "https://github.com/Midlight25/community-oasis-dashboard#readme",
   "dependencies": {
     "firebase": "^9.6.6",
     "firebase-tools": "^10.2.0",
