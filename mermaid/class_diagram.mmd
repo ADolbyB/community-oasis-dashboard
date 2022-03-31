@@ -1,0 +1,32 @@
+classDiagram
+	Person <|.. User
+	User "1" *-- "1" UserData
+	User "1" *-- "0..*" Visitor
+	
+	class Person {
+	<<abstract>>
+		+string firstName
+		+string lastName
+		+string userID
+	}
+
+	class User {
+		+int privlege
+		+List~Visitor~ visitors
+		+UserData userData
+
+	}
+
+	class UserData {
+		+string address
+		+string: gender
+		+date: birthday
+		+string: licensePlate
+		+string: email
+		+number: phone
+	}
+
+	class Visitor {
+		+ date: expirationDate
+		+ string: licensePlate
+	}
