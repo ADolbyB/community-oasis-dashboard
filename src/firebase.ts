@@ -1,4 +1,5 @@
 import {initializeApp} from "firebase/app";
+import "dotenv/config";
 
 const {
   API_KEY,
