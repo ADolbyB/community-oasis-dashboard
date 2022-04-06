@@ -37,14 +37,10 @@ export default function Login() {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
-    try {
-      navigate("/my-account");
-    } catch (error) {
-      setError(error.message);
-    }
+    navigate("/my-account");
   };
 
   return (
@@ -87,12 +83,8 @@ export default function Login() {
               ></TextField>
             </CardContent>
             <CardActions>
-              <Button
-                onClick={handleLogin}
-                variant="contained"
-                color="primary"
-                fullWidth
-              >Log In</Button>
+              <Button onClick={handleLogin} variant="contained"
+                color="primary" fullWidth>Log In</Button>
             </CardActions>
           </Card>
         </Grid>
