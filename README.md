@@ -5,6 +5,7 @@ A web app for CEN 4010 class project.
 Authors: Hakeem Johnson, Joshua Lavieri, Michael Mesquita, Sam Chowdhury, and (in memoriam) Joel Brigida.
 
 ## Status
+
 [![CodeQL](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/codeql-push.yml/badge.svg?branch=main)](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/codeql-push.yml)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 
