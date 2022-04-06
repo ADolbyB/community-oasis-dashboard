@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "/src/logo.svg";
 import "./App.css";
+// import app from "./firebase";
 
 /**
  * Starts the web application
@@ -22,6 +23,9 @@ function App() {
         >
           Learn React
         </a>
+        <p>
+          The app works now, lmao.
+        </p>
       </header>
     </div>
   );
