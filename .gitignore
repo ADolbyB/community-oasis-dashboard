@@ -71,3 +71,6 @@ dist/
 
 # Configuration Files
 .vscode/
+
+# Test Config Files
+authe.json
