@@ -46,7 +46,6 @@
   },
   "homepage": "https://github.com/Midlight25/community-oasis-dashboard#readme",
   "dependencies": {
-    "dotenv": "^16.0.0",
     "firebase": "^9.6.6",
     "firebase-tools": "^10.2.0",
     "react": "^17.0.2",
