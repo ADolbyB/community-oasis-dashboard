@@ -2,6 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import { MuiThemeProvider, createTheme } from '@material-ui/core/styles';
+
 import "./index.css";
 import App from "./App";
 
@@ -20,4 +21,5 @@ ReactDOM.render(
     </Router>
   </MuiThemeProvider>,
   document.getElementById("root")
+
 );
