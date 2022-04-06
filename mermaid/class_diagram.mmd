@@ -1,0 +1,75 @@
+classDiagram
+	direction RL
+	Person <|.. User
+	User "1" *-- "1" UserData
+	User "1" *-- "0..*" Visitor
+	User "1..*" -- "0..*" Transaction
+	User "1" -- "0..*" Event
+	User "1" -- "0..*" Group
+	
+	class Person {
+	<<abstract>>
+		+firstName : string
+		+lastName : string
+		+userID : string
+	}
+
+	class User {
+		+privilege : int
+		+visitors : List~Visitor~
+		+userData : UserData
+
+	}
+
+	class UserData {
+		+address : string
+		+gender : string
+		+birthday : date
+		+licensePlate : string
+		+email : string
+		+phone : int
+		+getAge(): int
+	}
+
+	class Visitor {
+		+date : expirationDate
+		+string : licensePlate
+	}
+
+	class Event {
+		+title : string
+		+description : string
+		+address : string
+		+attending : List~User~
+		+id : int
+		+createdBy : User
+		+dateCreated : date
+		+dateOccuring : date
+		+tags : List~string~
+		+registerUser(user: User)
+	}
+
+	class Transaction {
+		+user: User
+		+date: date
+		-transactionType: int
+		+payment: float
+		+id: int
+		+tags: List~string~
+		+isInitDeposit(): bool
+		+isMaintenenceFee(): bool
+	}
+
+	class Group {
+		+name : string
+		+description : string
+		+address : string
+		+tags: List~string~
+		+events: List~events~
+		+groupOwner : User
+		+members : List~User~
+		-groupType: int
+		+isClub(): boolean
+		+isCommitee(): boolean
+		+changeOwner(user: User)
+	}
