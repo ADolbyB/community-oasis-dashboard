@@ -31,6 +31,7 @@ module.exports = {
     "import/no-unresolved": 0,
     "no-console": 1,
     "react/jsx-uses-react": 2,
+    "linebreak-style": ["error", (process.platform === "win32" ? "windows" : "unix")]
   },
   settings: {
     react: {
