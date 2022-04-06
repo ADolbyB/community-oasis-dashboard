@@ -1,7 +1,7 @@
 import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
 
-import {UserRecord} from "firebase-functions/v1/auth";
+import { UserRecord } from "firebase-functions/v1/auth";
 
 // Initializing Access to Firestore
 admin.initializeApp();

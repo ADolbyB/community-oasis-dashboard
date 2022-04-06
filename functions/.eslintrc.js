@@ -26,5 +26,6 @@ module.exports = {
     "quotes": ["error", "double"],
     "import/no-unresolved": 0,
     "no-console": 1,
+    "object-curly-spacing": ["error", "always"],
   },
 };
