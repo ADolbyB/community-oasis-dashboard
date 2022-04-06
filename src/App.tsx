@@ -1,13 +1,13 @@
-//REACT
+// REACT
 import React from "react";
-import { Route, Routes } from 'react-router-dom';
+import {Route, Routes} from "react-router-dom";
 
-//CSS
+// CSS
 import "./App.css";
 
-//Pages
+// Pages
 import Login from "./pages/Login";
-import MyAccount from "./pages/MyAccount"
+import MyAccount from "./pages/MyAccount";
 /**
  * Starts the web application
  * @return {JSX.Element} Web Application Mount Point
