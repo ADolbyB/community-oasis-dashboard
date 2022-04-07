@@ -1,12 +1,12 @@
-//Auth
-import { UserAuthContextProvider } from "./contexts/UserAuthContext"
+// Auth
+import {UserAuthContextProvider} from "./contexts/UserAuthContext";
 
 // REACT
 import React from "react";
 
-//Routing
+// Routing
 import {Route, Routes} from "react-router-dom";
-import ProtectedRoute from './components/ProtectedRoute'
+import ProtectedRoute from "./components/ProtectedRoute";
 
 // CSS
 import "./App.css";
