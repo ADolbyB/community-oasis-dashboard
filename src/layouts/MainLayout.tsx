@@ -77,10 +77,6 @@ export default function ProfileSideNav({children}: Prop) {
     const classes = useStyles()
     const navigate = useNavigate();
 
-    const handleCreateProfile = () => {
-        navigate('/create-profile')
-    }
-
     return (
         <div className={classes.root}>
             <NavBar/>
