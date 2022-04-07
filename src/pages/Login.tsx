@@ -27,8 +27,8 @@ const useStyles = makeStyles({
 });
 
 /**
- *
- * @return {React}
+ * A login page view, routes to other components.
+ * @returns Login Page
  */
 export default function Login() {
   const classes = useStyles();

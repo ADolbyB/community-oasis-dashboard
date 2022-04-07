@@ -31,7 +31,10 @@ module.exports = {
     "import/no-unresolved": 0,
     "no-console": 1,
     "react/jsx-uses-react": 2,
-    "linebreak-style": ["error", "unix"]
+    "linebreak-style": ["error", "unix"],
+    "valid-jsdoc": ["error", {
+      "requireReturnType": false
+    }]
   },
   settings: {
     react: {

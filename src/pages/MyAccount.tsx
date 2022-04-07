@@ -1,8 +1,8 @@
-import React, {ReactComponentElement} from "react";
+import React from "react";
 
 /**
- *
- * @return {ReactComponentElement}
+ * A web page view for account management
+ * @returns Web Page View
  */
 export default function MyAccount() {
   return (
