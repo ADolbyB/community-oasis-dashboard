@@ -1,38 +1,68 @@
-//Auth
-import { useUserAuth } from "../contexts/UserAuthContext";
+import React from "react";
+import  TextField  from '@mui/material/TextField';
+import AdapterDatefns from '@mui/lab/AdapterDatefns';
+import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import DatePicker from '@mui/lab/DatePicker';
 
-// React
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+
+
+
 
 /**
  * A web page view for account management
  * @returns Web Page View
  */
 export default function MyAccount() {
-  const [error, setError] = useState("");
-  const { logOut } = useUserAuth();
-  const navigate = useNavigate();
 
-  const handleLogout = async (e: any) => {
-    e.preventDefault();
-    setError("");
-    try {
-      await logOut();
-      navigate('/');
-    } catch (error) {
-      if (error instanceof Error) {
-        setError(error.message);
-      } else {
-        setError(`Unexpected Error: ${error}`);
-      }
-    }
-  }
+  const [value, setValue] = React.useState<Date | null>(null);
+
+
   return (
+    <React.Fragment>
+
+
+    
     <div>
-      {error}
-      <p>Im in</p>
-      <button onClick={handleLogout}>Signout</button>
+      <h1 className="Accout-Header"> My Account</h1>
+
+      <p>Welcome, if you are a new Resident please Select a date below:</p>
+
+      <LocalizationProvider dateAdapter={AdapterDatefns}>
+
+      <DatePicker
+        label="Select Orientation date"
+        value={value}
+        onChange={(newValue) => {
+          setValue(newValue);
+        }}
+        renderInput={(params) => <TextField {...params} />}
+      />
+      </LocalizationProvider>
+
     </div>
+
+    <div >
+
+      <p>Upcoming Events:</p>
+  
+
+
+    </div>
+
+
+
+
+    <div>
+
+      <p>Bus and Carpool information:</p>
+  
+
+
+    </div>
+
+
+
+    </React.Fragment>
+
   );
 }
