@@ -1,13 +1,16 @@
-import React from "react";
-import { createContext, useContext, useEffect, useState } from "react";
+import React, {createContext, useContext, useEffect, useState} from "react";
 import {
+  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged,
-  signOut
+  signOut,
 } from "firebase/auth";
-import { auth } from "../firebase";
 
+import app from "../firebase";
+
+// Init auth object
+const auth = getAuth(app);
 interface IAuthContext {
   logIn: any,
   user: any,
@@ -17,11 +20,11 @@ interface IAuthContext {
 
 type Prop = {
   children: JSX.Element
-}   
+}
 
 const userAuthContext = createContext<Partial<IAuthContext>>({});
 
-export function UserAuthContextProvider({ children }: Prop) {
+export function UserAuthContextProvider({children}: Prop) {
   const [user, setUser] = useState<any>({});
 
   function logIn(email: string, password: string) {
@@ -36,9 +39,9 @@ export function UserAuthContextProvider({ children }: Prop) {
 
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (currentuser) => {
-      console.log("Auth", currentuser);
-      setUser(currentuser);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      console.log("Auth", currentUser);
+      setUser(currentUser);
     });
 
     return () => {
@@ -49,7 +52,7 @@ export function UserAuthContextProvider({ children }: Prop) {
 
   return (
     <userAuthContext.Provider
-      value={{ user, logIn, signUp, logOut }}
+      value={{user, logIn, signUp, logOut}}
     >
       {children}
     </userAuthContext.Provider>
@@ -58,4 +61,4 @@ export function UserAuthContextProvider({ children }: Prop) {
 
 export const useUserAuth = () => {
   return useContext(userAuthContext);
-}
+};
