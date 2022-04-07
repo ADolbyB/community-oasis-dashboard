@@ -1,6 +1,12 @@
+//Auth
+import { UserAuthContextProvider } from "./contexts/UserAuthContext"
+
 // REACT
 import React from "react";
+
+//Routing
 import {Route, Routes} from "react-router-dom";
+import ProtectedRoute from './components/ProtectedRoute'
 
 // CSS
 import "./App.css";
@@ -16,10 +22,16 @@ import MyAccount from "./pages/MyAccount";
 function App() {
   return (
     <div>
-      <Routes>
-        <Route path="/" element={<Login />}/>
-        <Route path="/my-account" element={<MyAccount />}/>
-      </Routes>
+      <UserAuthContextProvider>
+        <Routes>
+          <Route path="/" element={<Login />}/>
+          <Route path="/my-account" element={
+            <ProtectedRoute>
+              <MyAccount />
+            </ProtectedRoute>
+          } />
+        </Routes>
+      </UserAuthContextProvider>
     </div>
   );
 }
