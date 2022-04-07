@@ -1,4 +1,5 @@
-// Auth
+//Auth
+import { useUserAuth } from "../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
@@ -35,12 +36,22 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const { logIn } = useUserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: any) => {
     e.preventDefault();
     setError("");
-    navigate("/my-account");
+    try {
+      await logIn(email, password);
+      navigate("/my-account");
+    } catch (error) {
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(`Unexpected Error: ${error}`)
+      }
+    }
   };
 
   return (
