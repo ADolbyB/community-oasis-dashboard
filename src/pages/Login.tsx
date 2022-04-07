@@ -1,5 +1,5 @@
-//Auth
-import { useUserAuth } from "../contexts/UserAuthContext";
+// Auth
+import {useUserAuth} from "../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
@@ -36,10 +36,10 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { logIn } = useUserAuth();
+  const {logIn} = useUserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: any) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
     try {
@@ -49,7 +49,7 @@ export default function Login() {
       if (error instanceof Error) {
         setError(error.message);
       } else {
-        setError(`Unexpected Error: ${error}`)
+        setError(`Unexpected Error: ${error}`);
       }
     }
   };

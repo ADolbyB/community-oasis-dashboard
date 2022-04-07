@@ -1,11 +1,8 @@
 import React from "react";
-import  TextField  from '@mui/material/TextField';
-import AdapterDatefns from '@mui/lab/AdapterDatefns';
-import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import DatePicker from '@mui/lab/DatePicker';
-
-
-
+import TextField from "@mui/material/TextField";
+import AdapterDatefns from "@mui/lab/AdapterDatefns";
+import LocalizationProvider from "@mui/lab/LocalizationProvider";
+import DatePicker from "@mui/lab/DatePicker";
 
 
 /**
@@ -13,7 +10,6 @@ import DatePicker from '@mui/lab/DatePicker';
  * @returns Web Page View
  */
 export default function MyAccount() {
-
   const [value, setValue] = React.useState<Date | null>(null);
 
 
@@ -21,45 +17,39 @@ export default function MyAccount() {
     <React.Fragment>
 
 
-    
-    <div>
-      <h1 className="Accout-Header"> My Account</h1>
+      <div>
+        <h1 className="Accout-Header"> My Account</h1>
 
-      <p>Welcome, if you are a new Resident please Select a date below:</p>
+        <p>Welcome, if you are a new Resident please Select a date below:</p>
 
-      <LocalizationProvider dateAdapter={AdapterDatefns}>
+        <LocalizationProvider dateAdapter={AdapterDatefns}>
 
-      <DatePicker
-        label="Select Orientation date"
-        value={value}
-        onChange={(newValue) => {
-          setValue(newValue);
-        }}
-        renderInput={(params) => <TextField {...params} />}
-      />
-      </LocalizationProvider>
+          <DatePicker
+            label="Select Orientation date"
+            value={value}
+            onChange={(newValue) => {
+              setValue(newValue);
+            }}
+            renderInput={(params) => <TextField {...params} />}
+          />
+        </LocalizationProvider>
 
-    </div>
+      </div>
 
-    <div >
+      <div >
 
-      <p>Upcoming Events:</p>
-  
+        <p>Upcoming Events:</p>
 
 
-    </div>
+      </div>
 
 
+      <div>
+
+        <p>Bus and Carpool information:</p>
 
 
-    <div>
-
-      <p>Bus and Carpool information:</p>
-  
-
-
-    </div>
-
+      </div>
 
 
     </React.Fragment>
