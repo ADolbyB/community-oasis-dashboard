@@ -1,9 +1,9 @@
 import React from "react";
+
 import TextField from "@mui/material/TextField";
 import AdapterDatefns from "@mui/lab/AdapterDatefns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
-
 
 /**
  * A web page view for account management
@@ -15,8 +15,6 @@ export default function MyAccount() {
 
   return (
     <React.Fragment>
-
-
       <div>
         <h1 className="Accout-Header"> My Account</h1>
 
@@ -33,26 +31,13 @@ export default function MyAccount() {
             renderInput={(params) => <TextField {...params} />}
           />
         </LocalizationProvider>
-
       </div>
-
       <div >
-
         <p>Upcoming Events:</p>
-
-
       </div>
-
-
       <div>
-
         <p>Bus and Carpool information:</p>
-
-
       </div>
-
-
     </React.Fragment>
-
   );
 }
