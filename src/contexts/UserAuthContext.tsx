@@ -14,8 +14,6 @@ import app from "../firebase";
 const auth = getAuth(app);
 interface IAuthContext {
   user: any,
-  userFirstName: string,
-  userLastName: string,
   logIn: any,
   signUp: any,
   logOut: any,
@@ -30,8 +28,6 @@ const userAuthContext = createContext<Partial<IAuthContext>>({});
 
 export function UserAuthContextProvider({children}: Prop) {
   const [user, setUser] = useState<any>({});
-  const [userFirstName, setUserFirstName] = useState("");
-  const [userLastName, setUserLastName] = useState("");
 
   function logIn(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -46,11 +42,6 @@ export function UserAuthContextProvider({children}: Prop) {
     if(auth.currentUser !== null) {
       return updateProfile(auth.currentUser, {
         displayName: `${firstName} ${lastName}`
-      }).then(() => {
-        console.log('Name updated')
-        const name = user.displayName.split(" ")
-        setUserFirstName(name[0])
-        setUserLastName(name[1])
       })
     }
   }
@@ -70,7 +61,7 @@ export function UserAuthContextProvider({children}: Prop) {
 
   return (
     <userAuthContext.Provider
-      value={{user, userFirstName, userLastName, logIn, signUp, logOut, updateDisplayName}}
+      value={{user, logIn, signUp, logOut, updateDisplayName}}
     >
       {children}
     </userAuthContext.Provider>

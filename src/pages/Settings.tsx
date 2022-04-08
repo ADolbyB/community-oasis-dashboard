@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => createStyles({
 }))
 
 export default function Settings() {
-  const { user, userFirstName, userLastName } = useUserAuth();
+  const { user} = useUserAuth();
   const classes = useStyles();
 
   return (
@@ -47,11 +47,8 @@ export default function Settings() {
       <Header title="Contact Info" />
       <Box sx={{ width: '100%', marginLeft: 15, marginTop: 30 }}>
         <Grid container direction="column">
-            <Grid item className={classes.infoBlockBackgroundWhite}>
-                <Typography variant="body1">First Name: {userFirstName}</Typography>
-            </Grid>
             <Grid item className={classes.infoBlockBackgroundGrey}>
-              <Typography variant="body1">Last Name: {userLastName}</Typography>
+              <Typography variant="body1">Resident: {user.displayName}</Typography>
             </Grid>
             <Grid item className={classes.infoBlockBackgroundWhite}>
               <Typography variant="body1">Email: {user.email}</Typography>

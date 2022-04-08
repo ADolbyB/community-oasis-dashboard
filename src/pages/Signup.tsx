@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
   loginCard: {
     width: 400,
-    height: 350,
+    height: 500,
   },
 });
 
@@ -34,6 +34,8 @@ const useStyles = makeStyles({
  */
 export default function Signup() {
   const classes = useStyles();
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -45,6 +47,7 @@ export default function Signup() {
     setError("");
     try {
       await signUp(email, password);
+      await updateDisplayName(firstName, lastName);
       navigate("/my-account");
     } catch (error) {
       if (error instanceof Error) {
@@ -73,6 +76,26 @@ export default function Signup() {
           >
             <CardContent>
               <Typography variant="h3" component="h1" align="center">Sign up</Typography>
+              <TextField
+                className={classes.inputField}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFirstName(event.target.value)}
+                variant="standard"
+                label="First Name"
+                size="small"
+                type="text"
+                fullWidth
+                required
+              ></TextField>
+              <TextField
+                className={classes.inputField}
+                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setLastName(event.target.value)}
+                variant="standard"
+                label="Last Name"
+                size="small"
+                type="text"
+                fullWidth
+                required
+              ></TextField>
               <TextField
                 className={classes.inputField}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
