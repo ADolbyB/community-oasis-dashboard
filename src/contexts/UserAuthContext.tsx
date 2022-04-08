@@ -5,13 +5,20 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
-  updateProfile
+  updateProfile,
+  connectAuthEmulator,
 } from "firebase/auth";
 
 import app from "../firebase";
 
+
 // Init auth object
 const auth = getAuth(app);
+
+if (process.env.NODE_ENV === "development") {
+  const authy = connectAuthEmulator(auth, "http://localhost:9099");
+}
+
 interface IAuthContext {
   user: any,
   logIn: any,
@@ -39,10 +46,10 @@ export function UserAuthContextProvider({children}: Prop) {
     return signOut(auth);
   }
   function updateDisplayName(firstName: string, lastName: string) {
-    if(auth.currentUser !== null) {
+    if (auth.currentUser !== null) {
       return updateProfile(auth.currentUser, {
-        displayName: `${firstName} ${lastName}`
-      })
+        displayName: `${firstName} ${lastName}`,
+      });
     }
   }
 
