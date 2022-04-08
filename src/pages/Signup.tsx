@@ -75,10 +75,18 @@ export default function Signup() {
             variant="outlined"
           >
             <CardContent>
-              <Typography variant="h3" component="h1" align="center">Sign up</Typography>
+              <Typography
+                variant="h3"
+                component="h1"
+                align="center">
+                  Sign up
+              </Typography>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setFirstName(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setFirstName(event.target.value)
+                }
                 variant="standard"
                 label="First Name"
                 size="small"
@@ -88,7 +96,10 @@ export default function Signup() {
               ></TextField>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setLastName(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setLastName(event.target.value)
+                }
                 variant="standard"
                 label="Last Name"
                 size="small"
@@ -98,7 +109,10 @@ export default function Signup() {
               ></TextField>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(event.target.value)
+                }
                 variant="standard"
                 label="Email"
                 size="small"
@@ -108,7 +122,10 @@ export default function Signup() {
               ></TextField>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(event.target.value)
+                }
                 variant="standard"
                 label="Password"
                 size="small"
@@ -118,7 +135,13 @@ export default function Signup() {
               ></TextField>
             </CardContent>
             <CardActions>
-              <Button onClick={handleSignup} variant="contained" color="secondary" fullWidth>Create Account</Button>
+              <Button
+                onClick={handleSignup}
+                variant="contained"
+                color="secondary"
+                fullWidth>
+                  Create Account
+              </Button>
             </CardActions>
             <CardActions>
               <Link href="/">Already have an account? Login</Link>

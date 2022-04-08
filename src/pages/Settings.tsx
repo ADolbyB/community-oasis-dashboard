@@ -38,6 +38,10 @@ const useStyles = makeStyles((theme) => createStyles({
   },
 }));
 
+/**
+ * Settings page
+ * @returns Settings Page
+ */
 export default function Settings() {
   const {user} = useUserAuth();
   const classes = useStyles();
@@ -48,7 +52,10 @@ export default function Settings() {
       <Box sx={{width: "100%", marginLeft: 15, marginTop: 30}}>
         <Grid container direction="column">
           <Grid item className={classes.infoBlockBackgroundGrey}>
-            <Typography variant="body1">Resident: {user.displayName}</Typography>
+            <Typography
+              variant="body1">
+                Resident: {user.displayName}
+            </Typography>
           </Grid>
           <Grid item className={classes.infoBlockBackgroundWhite}>
             <Typography variant="body1">Email: {user.email}</Typography>
@@ -63,7 +70,12 @@ export default function Settings() {
           </Grid>
         </Grid>
       </Box>
-      <Typography variant="h6" component="h2" align="center">Checklist</Typography>
+      <Typography
+        variant="h6"
+        component="h2"
+        align="center">
+          Checklist
+      </Typography>
       <Box sx={{width: "100%", marginTop: 30}} className={classes.checklist}>
         Your ready to go!
       </Box>

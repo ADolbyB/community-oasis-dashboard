@@ -12,8 +12,6 @@ import Toolbar from "@material-ui/core/Toolbar";
 import IconButton from "@material-ui/core/IconButton";
 import Typography from "@material-ui/core/Typography";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/core/Menu";
-import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Tooltip from "@material-ui/core/Tooltip";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -36,6 +34,10 @@ const useStyles = makeStyles((theme) => {
   };
 });
 
+/**
+ * Navbar displayed at top of every page
+ * @returns NavBar
+ */
 export default function NavBar() {
   const navigate = useNavigate();
   const classes = useStyles();
@@ -81,7 +83,10 @@ export default function NavBar() {
     }
   };
   return (
-    <AppBar position="absolute" className={classes.appbar} style={{background: "#3A3B3C"}}>
+    <AppBar
+      position="absolute"
+      className={classes.appbar}
+      style={{background: "#3A3B3C"}}>
       <Toolbar >
         <Typography
           noWrap
@@ -89,7 +94,9 @@ export default function NavBar() {
         >
           Oasis retirement community
         </Typography>
-        <Box className={classes.btnBox} sx={{flexGrow: 15, display: {xs: "none", md: "flex"}}} />
+        <Box
+          className={classes.btnBox}
+          sx={{flexGrow: 15, display: {xs: "none", md: "flex"}}} />
         <Box sx={{flexGrow: 0}}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
@@ -97,7 +104,6 @@ export default function NavBar() {
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{mt: "45px"}}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{

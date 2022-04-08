@@ -75,7 +75,10 @@ export default function Login() {
               <Typography variant="h3" component="h1">Oasis Portal</Typography>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setEmail(event.target.value)
+                }
                 variant="standard"
                 label="Email"
                 size="small"
@@ -85,7 +88,10 @@ export default function Login() {
               ></TextField>
               <TextField
                 className={classes.inputField}
-                onChange={(event: React.ChangeEvent<HTMLInputElement>) => setPassword(event.target.value)}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPassword(event.target.value)
+                }
                 variant="standard"
                 label="Password"
                 size="small"
@@ -95,7 +101,13 @@ export default function Login() {
               ></TextField>
             </CardContent>
             <CardActions>
-              <Button onClick={handleLogin} variant="contained" color="secondary" fullWidth>Log In</Button>
+              <Button
+                onClick={handleLogin}
+                variant="contained"
+                color="secondary"
+                fullWidth>
+                  Log In
+              </Button>
             </CardActions>
             <CardActions>
               <Link href="/signup">Create a new account</Link>

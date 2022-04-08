@@ -1,6 +1,6 @@
 // React
 import React from "react";
-import {useNavigate, useLocation} from "react-router-dom";
+import {useNavigate} from "react-router-dom";
 import NavBar from "./components/NavBar";
 
 // Material UI
@@ -75,7 +75,12 @@ type Prop = {
     children: JSX.Element | JSX.Element[]
 }
 
-export default function ProfileSideNav({children}: Prop) {
+/**
+ * Used to display the layout to all pages.
+ * @param {Prop} prop - displays the contect inside the layout.
+ * @returns MainLayout.
+ */
+export default function MainLayout({children}: Prop) {
   const classes = useStyles();
   const navigate = useNavigate();
 
