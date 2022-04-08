@@ -1,5 +1,5 @@
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import { useUserAuth } from "../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
