@@ -32,19 +32,19 @@ const useStyles = makeStyles({
  * A login page view, routes to other components.
  * @returns Login Page
  */
-export default function Login() {
+export default function Signup() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {logIn} = useUserAuth();
+  const { signUp, updateDisplayName } = useUserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
     try {
-      await logIn(email, password);
+      await signUp(email, password);
       navigate("/my-account");
     } catch (error) {
       if (error instanceof Error) {
@@ -72,7 +72,7 @@ export default function Login() {
             variant="outlined"
           >
             <CardContent>
-              <Typography variant="h3" component="h1">Oasis Portal</Typography>
+              <Typography variant="h3" component="h1" align="center">Sign up</Typography>
               <TextField
                 className={classes.inputField}
                 onChange={(event: React.ChangeEvent<HTMLInputElement>) => setEmail(event.target.value)}
@@ -95,12 +95,11 @@ export default function Login() {
               ></TextField>
             </CardContent>
             <CardActions>
-              <Button onClick={handleLogin} variant="contained" color="secondary" fullWidth>Log In</Button>
+              <Button onClick={handleSignup} variant="contained" color="secondary" fullWidth>Create Account</Button>
             </CardActions>
             <CardActions>
-              <Link href="/signup">Create a new account</Link>
+              <Link href="/">Already have an account? Login</Link>
             </CardActions>
-              
           </Card>
         </Grid>
       </form>
