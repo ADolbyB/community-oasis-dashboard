@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged,
   signOut,
+  updateProfile
 } from "firebase/auth";
 
 import app from "../firebase";
@@ -12,10 +13,13 @@ import app from "../firebase";
 // Init auth object
 const auth = getAuth(app);
 interface IAuthContext {
-  logIn: any,
   user: any,
+  userFirstName: string,
+  userLastName: string,
+  logIn: any,
   signUp: any,
-  logOut: any
+  logOut: any,
+  updateDisplayName: any
 }
 
 type Prop = {
@@ -26,6 +30,8 @@ const userAuthContext = createContext<Partial<IAuthContext>>({});
 
 export function UserAuthContextProvider({children}: Prop) {
   const [user, setUser] = useState<any>({});
+  const [userFirstName, setUserFirstName] = useState("");
+  const [userLastName, setUserLastName] = useState("");
 
   function logIn(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);
@@ -35,6 +41,18 @@ export function UserAuthContextProvider({children}: Prop) {
   }
   function logOut() {
     return signOut(auth);
+  }
+  function updateDisplayName(firstName: string, lastName: string) {
+    if(auth.currentUser !== null) {
+      return updateProfile(auth.currentUser, {
+        displayName: `${firstName} ${lastName}`
+      }).then(() => {
+        console.log('Name updated')
+        const name = user.displayName.split(" ")
+        setUserFirstName(name[0])
+        setUserLastName(name[1])
+      })
+    }
   }
 
 
@@ -52,7 +70,7 @@ export function UserAuthContextProvider({children}: Prop) {
 
   return (
     <userAuthContext.Provider
-      value={{user, logIn, signUp, logOut}}
+      value={{user, userFirstName, userLastName, logIn, signUp, logOut, updateDisplayName}}
     >
       {children}
     </userAuthContext.Provider>

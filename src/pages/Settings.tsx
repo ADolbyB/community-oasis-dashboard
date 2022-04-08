@@ -1,3 +1,6 @@
+//Auth
+import {useUserAuth} from "../contexts/UserAuthContext";
+
 //React
 import React from 'react'
 
@@ -36,20 +39,22 @@ const useStyles = makeStyles((theme) => createStyles({
 }))
 
 export default function Settings() {
-  const classes = useStyles()
+  const { user, userFirstName, userLastName } = useUserAuth();
+  const classes = useStyles();
+
   return (
     <MainLayout>
       <Header title="Contact Info" />
       <Box sx={{ width: '100%', marginLeft: 15, marginTop: 30 }}>
-        <Grid container direction="column" lg="auto">
+        <Grid container direction="column">
             <Grid item className={classes.infoBlockBackgroundWhite}>
-                <Typography variant="body1">First Name: Joshua</Typography>
+                <Typography variant="body1">First Name: {userFirstName}</Typography>
             </Grid>
             <Grid item className={classes.infoBlockBackgroundGrey}>
-              <Typography variant="body1">Last Name: Lavieri</Typography>
+              <Typography variant="body1">Last Name: {userLastName}</Typography>
             </Grid>
             <Grid item className={classes.infoBlockBackgroundWhite}>
-              <Typography variant="body1">Email: dumby@test.com</Typography>
+              <Typography variant="body1">Email: {user.email}</Typography>
             </Grid>
             <Grid item className={classes.infoBlockBackgroundGrey}>
               <Typography variant="body1">Phone: 555-555-5555</Typography>
