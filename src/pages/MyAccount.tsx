@@ -9,6 +9,9 @@ import DatePicker from "@mui/lab/DatePicker";
 
 //Layout
 import MainLayout from '../layouts/MainLayout'
+
+//Components
+import Header from "../components/Header";
 /**
  * A web page view for account management
  * @returns Web Page View
@@ -20,8 +23,8 @@ export default function MyAccount() {
   return (
     <MainLayout>
       <div>
-        <h1 className="Accout-Header"> My Account</h1>
-
+       
+        <Header title="My Account" />
         <p>Welcome, if you are a new Resident please Select a date below:</p>
 
         <LocalizationProvider dateAdapter={AdapterDatefns}>

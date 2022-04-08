@@ -14,6 +14,7 @@ import "./App.css";
 // Pages
 import Login from "./pages/Login";
 import MyAccount from "./pages/MyAccount";
+import Settings from './pages/Settings'
 
 /**
  * Starts the web application
@@ -28,6 +29,11 @@ function App() {
           <Route path="/my-account" element={
             <ProtectedRoute>
               <MyAccount />
+            </ProtectedRoute>
+          } />
+          <Route path="/settings" element={
+            <ProtectedRoute>
+              <Settings />
             </ProtectedRoute>
           } />
         </Routes>
