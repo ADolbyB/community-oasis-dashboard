@@ -1,16 +1,16 @@
-//React
+// React
 import React from "react";
 
-//MaterialUI
+// MaterialUI
 import TextField from "@mui/material/TextField";
 import AdapterDatefns from "@mui/lab/AdapterDatefns";
 import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
-//Layout
-import MainLayout from '../layouts/MainLayout'
+// Layout
+import MainLayout from "../layouts/MainLayout";
 
-//Components
+// Components
 import Header from "../components/Header";
 /**
  * A web page view for account management
@@ -23,7 +23,7 @@ export default function MyAccount() {
   return (
     <MainLayout>
       <div>
-       
+
         <Header title="My Account" />
         <p>Welcome, if you are a new Resident please Select a date below:</p>
 

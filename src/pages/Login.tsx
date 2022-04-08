@@ -1,10 +1,10 @@
 // Auth
-import { useUserAuth } from "../contexts/UserAuthContext";
+import {useUserAuth} from "../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import Link from "@material-ui/core/Link"
+import Link from "@material-ui/core/Link";
 
 // Layout
 import Typography from "@material-ui/core/Typography";
@@ -100,7 +100,7 @@ export default function Login() {
             <CardActions>
               <Link href="/signup">Create a new account</Link>
             </CardActions>
-              
+
           </Card>
         </Grid>
       </form>

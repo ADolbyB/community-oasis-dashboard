@@ -1,47 +1,46 @@
-//Auth
-import { useUserAuth } from "../../contexts/UserAuthContext";
+// Auth
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
-//React
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+// React
+import React, {useState} from "react";
+import {useNavigate} from "react-router-dom";
 
-//Material UI
-import AppBar from '@material-ui/core/AppBar';
-import Box from '@material-ui/core/Box';
-import Toolbar from '@material-ui/core/Toolbar';
-import IconButton from '@material-ui/core/IconButton';
-import Typography from '@material-ui/core/Typography';
-import Menu from '@material-ui/core/Menu';
-import MenuIcon from '@material-ui/core/Menu';
-import Container from '@material-ui/core/Container';
-import Avatar from '@material-ui/core/Avatar';
-import Tooltip from '@material-ui/core/Tooltip';
-import MenuItem from '@material-ui/core/MenuItem';
-import { makeStyles } from '@material-ui/core';
-import Button from '@material-ui/core/Button';
+// Material UI
+import AppBar from "@material-ui/core/AppBar";
+import Box from "@material-ui/core/Box";
+import Toolbar from "@material-ui/core/Toolbar";
+import IconButton from "@material-ui/core/IconButton";
+import Typography from "@material-ui/core/Typography";
+import Menu from "@material-ui/core/Menu";
+import MenuIcon from "@material-ui/core/Menu";
+import Container from "@material-ui/core/Container";
+import Avatar from "@material-ui/core/Avatar";
+import Tooltip from "@material-ui/core/Tooltip";
+import MenuItem from "@material-ui/core/MenuItem";
+import {makeStyles} from "@material-ui/core";
+import Button from "@material-ui/core/Button";
 
 
 const useStyles = makeStyles((theme) => {
   return {
     btn: {
-      color: 'white',
+      color: "white",
     },
     btnBox: {
-      marginLeft: 40
+      marginLeft: 40,
     },
     appbar: {
-      zIndex: theme.zIndex.drawer + 1
-    }
+      zIndex: theme.zIndex.drawer + 1,
+    },
 
-  }
-
-})
+  };
+});
 
 export default function NavBar() {
   const navigate = useNavigate();
-  const classes = useStyles()
+  const classes = useStyles();
   const [error, setError] = useState("");
-  const { logOut, user } = useUserAuth();
+  const {logOut, user} = useUserAuth();
 
 
   const [anchorElUser, setAnchorElUser] = React.useState(null);
@@ -59,30 +58,30 @@ export default function NavBar() {
     setError("");
     try {
       await logOut();
-      navigate('/');
+      navigate("/");
     } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError(`Unexpected Error: ${error}`);
-        }
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(`Unexpected Error: ${error}`);
       }
-  }
+    }
+  };
 
   const handleSettings = () => {
     setError("");
     try {
-      navigate('/settings');
+      navigate("/settings");
     } catch (error) {
-        if (error instanceof Error) {
-          setError(error.message);
-        } else {
-          setError(`Unexpected Error: ${error}`);
-        }
+      if (error instanceof Error) {
+        setError(error.message);
+      } else {
+        setError(`Unexpected Error: ${error}`);
       }
-  }
+    }
+  };
   return (
-    <AppBar position="absolute" className={classes.appbar} style={{ background: '#3A3B3C' }}>
+    <AppBar position="absolute" className={classes.appbar} style={{background: "#3A3B3C"}}>
       <Toolbar >
         <Typography
           noWrap
@@ -90,25 +89,25 @@ export default function NavBar() {
         >
           Oasis retirement community
         </Typography>
-        <Box className={classes.btnBox} sx={{ flexGrow: 15, display: { xs: 'none', md: 'flex' } }} />
-        <Box sx={{ flexGrow: 0 }}>
+        <Box className={classes.btnBox} sx={{flexGrow: 15, display: {xs: "none", md: "flex"}}} />
+        <Box sx={{flexGrow: 0}}>
           <Tooltip title="Open settings">
             <IconButton onClick={handleOpenUserMenu}>
               <Avatar alt={user.displayName} src="#" />
             </IconButton>
           </Tooltip>
           <Menu
-            sx={{ mt: '45px' }}
+            sx={{mt: "45px"}}
             id="menu-appbar"
             anchorEl={anchorElUser}
             anchorOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             keepMounted
             transformOrigin={{
-              vertical: 'top',
-              horizontal: 'right',
+              vertical: "top",
+              horizontal: "right",
             }}
             open={Boolean(anchorElUser)}
             onClose={handleCloseUserMenu}
@@ -123,5 +122,5 @@ export default function NavBar() {
         </Box>
       </Toolbar>
     </AppBar>
-  )
+  );
 }

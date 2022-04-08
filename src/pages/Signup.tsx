@@ -4,7 +4,7 @@ import {useUserAuth} from "../contexts/UserAuthContext";
 // React
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import Link from "@material-ui/core/Link"
+import Link from "@material-ui/core/Link";
 
 // Layout
 import Typography from "@material-ui/core/Typography";
@@ -39,7 +39,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const { signUp, updateDisplayName } = useUserAuth();
+  const {signUp, updateDisplayName} = useUserAuth();
   const navigate = useNavigate();
 
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {

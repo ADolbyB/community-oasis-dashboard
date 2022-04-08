@@ -14,8 +14,8 @@ import "./App.css";
 // Pages
 import Login from "./pages/Login";
 import MyAccount from "./pages/MyAccount";
-import Settings from './pages/Settings';
-import Signup from './pages/Signup'
+import Settings from "./pages/Settings";
+import Signup from "./pages/Signup";
 
 /**
  * Starts the web application

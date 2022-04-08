@@ -1,8 +1,8 @@
-//React
-import React from 'react'
+// React
+import React from "react";
 
-//MaterialUI
-import Typography from '@material-ui/core/Typography'
+// MaterialUI
+import Typography from "@material-ui/core/Typography";
 
 type Props = {
     title: string
@@ -10,5 +10,5 @@ type Props = {
 export default function Header(props: Props) {
   return (
     <Typography variant="h4">{props.title}</Typography>
-  )
+  );
 }
