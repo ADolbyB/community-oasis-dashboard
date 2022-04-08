@@ -14,7 +14,7 @@ import MainLayout from "../layouts/MainLayout";
 import Header from "../components/Header";
 /**
  * A web page view for account management
- * @returns Web Page View
+ * @returns My account page view
  */
 export default function MyAccount() {
   const [value, setValue] = React.useState<Date | null>(null);
@@ -23,7 +23,6 @@ export default function MyAccount() {
   return (
     <MainLayout>
       <div>
-
         <Header title="My Account" />
         <p>Welcome, if you are a new Resident please Select a date below:</p>
 

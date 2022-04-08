@@ -32,19 +32,48 @@ type Prop = {
 }
 
 const userAuthContext = createContext<Partial<IAuthContext>>({});
-
+/**
+ * Context used so pages can access auth.
+ * @param {Prop} children - The routes under the context.
+ * @returns Functions used in authContextProvider.
+ */
 export function UserAuthContextProvider({children}: Prop) {
   const [user, setUser] = useState<any>({});
 
+  /**
+   * Used to log users into application with firebase
+   * @param {string }email - Email used by user to log in
+   * @param {string} password - Password used by user to log in
+   * @returns signInWithEmailAndPassword
+   */
   function logIn(email: string, password: string) {
     return signInWithEmailAndPassword(auth, email, password);
   }
+
+  /**
+   * Used to create users with firebase.
+   * @param {string} email - Email used to create users.
+   * @param {string} password - Password used to create users.
+   * @returns createUserWithEmailAndPassword
+   */
   function signUp(email: string, password: string) {
     return createUserWithEmailAndPassword(auth, email, password);
   }
+
+  /**
+   * Used to deauthenticate users
+   * @returns signOut
+   */
   function logOut() {
     return signOut(auth);
   }
+
+  /**
+   * Used to enter display name into database.
+   * @param {string} firstName - Firstname.
+   * @param {string} lastName - LastName.
+   * @returns updateProfile
+   */
   function updateDisplayName(firstName: string, lastName: string) {
     if (auth.currentUser !== null) {
       return updateProfile(auth.currentUser, {

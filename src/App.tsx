@@ -1,7 +1,7 @@
 // Auth
 import {UserAuthContextProvider} from "./contexts/UserAuthContext";
 
-// REACT
+// React
 import React from "react";
 
 // Routing
@@ -16,6 +16,7 @@ import Login from "./pages/Login";
 import MyAccount from "./pages/MyAccount";
 import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
+import Payment from "./pages/Payment";
 
 /**
  * Starts the web application
@@ -31,6 +32,11 @@ function App() {
           <Route path="/my-account" element={
             <ProtectedRoute>
               <MyAccount />
+            </ProtectedRoute>
+          } />
+          <Route path="/payment" element={
+            <ProtectedRoute>
+              <Payment />
             </ProtectedRoute>
           } />
           <Route path="/settings" element={
