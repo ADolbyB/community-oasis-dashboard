@@ -17,6 +17,7 @@ import MyAccount from "./pages/MyAccount";
 import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
 import Payment from "./pages/Payment";
+import ReportIssue from "./pages/ReportIssue";
 
 /**
  * Starts the web application
@@ -27,8 +28,8 @@ function App() {
     <div>
       <UserAuthContextProvider>
         <Routes>
-          <Route path="/" element={<Login />}/>
-          <Route path="/signup" element={<Signup />}/>
+          <Route path="/" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
           <Route path="/my-account" element={
             <ProtectedRoute>
               <MyAccount />
@@ -37,6 +38,11 @@ function App() {
           <Route path="/payment" element={
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          } />
+          <Route path="/report-issue" element={
+            <ProtectedRoute>
+              <ReportIssue />
             </ProtectedRoute>
           } />
           <Route path="/settings" element={

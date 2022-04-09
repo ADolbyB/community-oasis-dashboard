@@ -15,6 +15,7 @@ import HomeIcon from "@mui/icons-material/Home";
 import PaymentIcon from "@mui/icons-material/Payment";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PollIcon from "@mui/icons-material/Poll";
+import ReportProblemIcon from "@mui/icons-material/ReportProblem";
 
 const drawerWidth = 240;
 
@@ -67,6 +68,11 @@ const tabs = [
     text: "Community Surveys",
     id: "surveys",
     icon: <PollIcon />,
+  },
+  {
+    text: "Report Issue",
+    id: "report-issue",
+    icon: <ReportProblemIcon />,
   },
 
 ];
