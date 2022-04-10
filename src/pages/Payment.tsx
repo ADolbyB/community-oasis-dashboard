@@ -132,6 +132,7 @@ export default function Payment() {
               header="Card number*"
               placeholder="4444 4444 4444 4444"
               required={true}
+              fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
                   setDate(event.target.value)
@@ -143,6 +144,7 @@ export default function Payment() {
               header="Expiration date*"
               placeholder="MM/YY"
               required={true}
+              fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
                   setDate(event.target.value)
@@ -154,6 +156,7 @@ export default function Payment() {
               header="CVC*"
               placeholder="000"
               required={true}
+              fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
                   setCode(event.target.value)
@@ -165,6 +168,7 @@ export default function Payment() {
               header="Payment Amount*"
               placeholder="$1500"
               required={true}
+              fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
                   setAmount(event.target.value)
@@ -176,6 +180,7 @@ export default function Payment() {
               header="Note/Memo"
               placeholder="For future me"
               required={false}
+              fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
                   setNote(event.target.value)

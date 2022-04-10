@@ -10,6 +10,7 @@ type Props = {
   header: string,
   required: boolean,
   onChange: any,
+  fullWidth: boolean,
 }
 
 /**
@@ -24,7 +25,7 @@ export default function TextInput(props: Props) {
       <TextField
         placeholder={props.placeholder}
         variant="outlined"
-        fullWidth
+        fullWidth={props.fullWidth}
         onChange={props.onChange}
         required={props.required}
       />
