@@ -51,9 +51,12 @@ const useStyles = makeStyles(() => createStyles({
     marginRight: 30,
   },
   checklist: {
-    borderRadius: 5,
-    background: "#C4C4C4",
-    width: "30%",
+    "borderRadius": 5,
+    "background": "#C4C4C4",
+    "width": "100%",
+    "display": "flex",
+    "flex-direction": "row",
+    "justify-content": "space-between",
   },
   visitorsList: {
     borderRadius: 5,
@@ -294,7 +297,7 @@ export default function Settings() {
         align="center">
           Checklist
       </Typography>
-      <Box align="center">
+      <Box sx={{width: "50vh", margin: "auto"}}>
         <ChecklistItem todo="Grab keys from front desk"/>
         <ChecklistItem todo="Grab gate entry card"/>
         <ChecklistItem todo="Take picture for community id"/>
