@@ -3,6 +3,7 @@ import * as admin from "firebase-admin";
 
 import { UserRecord } from "firebase-functions/v1/auth";
 
+
 // Initializing Access to Firestore
 admin.initializeApp();
 
@@ -30,13 +31,8 @@ export const newUserActivation = functions.auth.user().onCreate(
         phone: 0,
       });
 
-      // Init visitor store
-      userDoc.collection("visitors").add({
-        register_date: new Date("January 1, 1999"),
-        first_name: "John",
-        last_name: "Doe",
-        license_plate: "JHDE19",
-      });
+      // Cannot create empty subcollection so I'm not making
+      // for visitors, the application will have to handle that.
 
       return 0;
     });
