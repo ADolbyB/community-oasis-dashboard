@@ -8,7 +8,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "parcel serve",
     "build": "npm run build:functions && npm run build:webapp",
-    "build:webapp": "npm run check && parcel build",
+    "build:webapp": "npm run lint && npm run check && parcel build",
     "build:functions": "npm --prefix functions/ run build",
     "serve": "firebase emulators:start --import test_data/",
     "serve:functions": "npm --prefix functions/ run serve",
@@ -19,7 +19,9 @@
     "clean:debug": "shx rm './**debug.log'",
     "clean:parcel": "shx rm -rf .parcel-cache/ dist/",
     "check": "tsc --noEmit",
+    "check:functions": "npm --prefix functions/ run check",
     "lint": "eslint --ext js,ts,jsx,tsx src",
+    "lint:functions": "npm --prefix functions/ run lint",
     "fix": "eslint --ext js,ts,jsx,tsx --fix src"
   },
   "repository": {
