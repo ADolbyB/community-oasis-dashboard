@@ -5,7 +5,7 @@ on:
   pull_request: 
     branches: [ main, dev ]
 jobs:
-  test_code_push:
+  test_code_submission:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -13,12 +13,18 @@ jobs:
         with: 
           node-version: '16'
           cache: 'npm'
-      - name: "Check Webapp Code"
+      - name: "Install Webapp Dependencies"
         run: npm ci
+      - name: "Webapp Type Checking"
         run: npm run check
+      - name: "Webapp Linting"
         run: npm run lint
-      - name: "Check Functions Code"
+      - name: "Install Functions Dependencies"
         working_directory: "./functions"
         run: npm ci
+      - name: "Functions Type Checking"
+        working_directory: "./functions"
         run: npm run check
+      - name: "Functions Linting"
+        working_directory: "./functions"
         run: npm run lint
