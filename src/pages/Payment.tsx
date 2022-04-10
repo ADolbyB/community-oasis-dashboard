@@ -74,6 +74,7 @@ export default function Payment() {
               header="Payment Amount*"
               placeholder="Amount"
               required={true}
+              onChange=""
             />
           </Box>
           <Box className={classes.input}>
@@ -81,6 +82,7 @@ export default function Payment() {
               header="Experation date*"
               placeholder="MM/YY"
               required={true}
+              onChange=""
             />
           </Box>
           <Box className={classes.input}>
@@ -88,6 +90,7 @@ export default function Payment() {
               header="CVC*"
               placeholder="CVC"
               required={true}
+              onChange=""
             />
           </Box>
           <Box className={classes.input}>
@@ -95,6 +98,7 @@ export default function Payment() {
               placeholder="Note/Memo"
               header="Note/Memo"
               required={false}
+              onChange=""
             />
           </Box>
           <Box className={classes.submit}>

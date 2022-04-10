@@ -1,4 +1,6 @@
 import React, {createContext, useContext, useEffect, useState} from "react";
+
+// Auth
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -9,14 +11,22 @@ import {
   connectAuthEmulator,
 } from "firebase/auth";
 
+// Firestore
+import {getFirestore, connectFirestoreEmulator} from "firebase/firestore";
+
 import app from "../firebase";
 
 
 // Init auth object
 const auth = getAuth(app);
 
+// Init Firestore object
+const db = getFirestore(app);
+
+
 if (process.env.NODE_ENV === "development") {
-  const authy = connectAuthEmulator(auth, "http://localhost:9099");
+  connectAuthEmulator(auth, "http://localhost:9099");
+  connectFirestoreEmulator(db, "localhost", 8080);
 }
 
 interface IAuthContext {
