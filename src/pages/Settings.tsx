@@ -29,6 +29,7 @@ import Grid from "@material-ui/core/Grid";
 import {makeStyles, createStyles} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
+import Switch from "@material-ui/core/Switch";
 
 // Init firestore
 const db = getFirestore(app);
@@ -50,11 +51,11 @@ const useStyles = makeStyles(() => createStyles({
     marginRight: 30,
   },
   checklist: {
-    backgroundColor: "#C4C4C4",
     borderRadius: 5,
+    background: "#C4C4C4",
+    width: "30%",
   },
   visitorsList: {
-    backgroundColor: "#C4C4C4",
     borderRadius: 5,
   },
   header: {
@@ -63,6 +64,9 @@ const useStyles = makeStyles(() => createStyles({
   },
   submit: {
     marginTop: 25,
+  },
+  switch: {
+    justifyContent: "center",
   },
 }));
 
@@ -165,6 +169,29 @@ export default function Settings() {
     );
   }
 
+  type Prop = {
+    todo: string
+  }
+
+  /**
+   * The item that needs to be checked off
+   * @param {Prop} props Lists the todo item
+   * @returns ChecklistItem
+   */
+  function ChecklistItem(props: Prop) {
+    return (
+      <Box className={classes.checklist}>
+        <Typography
+          style={{display: "inline-flex", marginRight: 50}}
+          align="left"
+          variant="body1">
+          {props.todo}
+        </Typography>
+        <Switch color="primary" style={{display: "inline-flex"}}/>
+      </Box>
+    );
+  }
+
   return (
     <MainLayout>
       <Header title="Contact Info" />
@@ -198,6 +225,7 @@ export default function Settings() {
           Create Visitor
         </Typography>
         <Grid container direction="row" justifyContent="center">
+          <Grid></Grid>
           <TextInput
             header=""
             placeholder="First Name"
@@ -266,8 +294,11 @@ export default function Settings() {
         align="center">
           Checklist
       </Typography>
-      <Box className={classes.checklist}>
-        Your ready to go!
+      <Box align="center">
+        <ChecklistItem todo="Grab keys from front desk"/>
+        <ChecklistItem todo="Grab gate entry card"/>
+        <ChecklistItem todo="Take picture for community id"/>
+        <ChecklistItem todo="Visit club house"/>
       </Box>
     </MainLayout>
   );
