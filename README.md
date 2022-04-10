@@ -6,6 +6,7 @@ Authors: Hakeem Johnson, Joshua Lavieri, Michael Mesquita, Sam Chowdhury, and (i
 
 ## Status
 
+[![[main: CI Status]](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/project-ci.yml/badge.svg?branch=main&event=push)](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/project-ci.yml)
 [![CodeQL](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/codeql-push.yml/badge.svg?branch=main)](https://github.com/Midlight25/community-oasis-dashboard/actions/workflows/codeql-push.yml)
 [![made-with-javascript](https://img.shields.io/badge/Made%20with-JavaScript-1f425f.svg)](https://www.javascript.com)
 

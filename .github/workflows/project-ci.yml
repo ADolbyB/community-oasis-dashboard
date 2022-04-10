@@ -1,4 +1,4 @@
-name: "Node Continuous Integration"
+name: "Node CI"
 on:
   push:
     branches: [ main, dev ]
