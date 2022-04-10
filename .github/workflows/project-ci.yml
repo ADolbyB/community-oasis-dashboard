@@ -8,17 +8,18 @@ jobs:
   test_code_push:
     runs_on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
+      - name: "Setup Environment"
+        uses: actions/checkout@v3
+        uses: actions/setup-node@v3
         with: 
           node-version: '16'
           cache: 'npm'
       - name: "Check Webapp Code"
-      - run: npm ci
-      - run: npm run check
-      - run: npm run lint
+        run: npm ci
+        run: npm run check
+        run: npm run lint
       - name: "Check Functions Code"
         working_directory: "./functions"
-      - run: npm ci
-      - run: npm run check
-      - run: npm run lint
+        run: npm ci
+        run: npm run check
+        run: npm run lint
