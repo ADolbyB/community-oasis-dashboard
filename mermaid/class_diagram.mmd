@@ -6,6 +6,11 @@ classDiagram
 	User "1..*" -- "0..*" Transaction
 	User "1" -- "0..*" Event
 	User "1" -- "0..*" Group
+	User "1" -- "0..*" Questionare
+	Questionare "1" -- "1..*" QuestionareItem
+	QuestionareItem <| -- MultipleChoiceItem
+	QuestionareItem <| -- TrueFalseItem
+	Questionare "1" -- "0..*" Response
 	
 	class Person {
 	<<abstract>>
@@ -72,4 +77,36 @@ classDiagram
 		+isClub(): boolean
 		+isCommitee(): boolean
 		+changeOwner(user: User)
+	}
+
+	class QuestionareItem {
+		<<interface>>
+		+question: string
+		+answers: List~~ | boolean
+	}
+
+	class Questionare {
+		+createdBy: User
+		+questions: List~QuestionareItem~
+
+		+responses: List~Response~
+		+id: number
+		+creationDate: date
+		+tags: List~string~
+
+		+createNewResponse(user: User, response: Response)
+	}
+
+	class Response {
+		+user: User
+		+answers: List~string, number, boolean~
+		+date: Date
+	}
+
+	class MultipleChoiceItem {
+		+answers: List~string~
+	}
+
+	class TrueFalseItem {
+		+answer: boolean
 	}
