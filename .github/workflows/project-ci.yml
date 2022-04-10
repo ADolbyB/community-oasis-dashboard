@@ -1,9 +1,9 @@
-name: Node Continuous Integration
-"on":
+name: "Node Continuous Integration"
+on:
   push:
-    branches:
-      - main
-      - dev
+    branches: [ main, dev ]
+  pull_request: 
+    branches: [ main, dev ]
 jobs:
   test_code_push:
     runs_on: ubuntu-latest
