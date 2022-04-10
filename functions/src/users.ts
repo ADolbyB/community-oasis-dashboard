@@ -32,7 +32,7 @@ export const newUserActivation = functions.auth.user().onCreate(
 
       // Init visitor store
       userDoc.collection("visitors").add({
-        expirationDate: new Date("January 1, 1999"),
+        register_date: new Date("January 1, 1999"),
         first_name: "John",
         last_name: "Doe",
         license_plate: "JHDE19",
