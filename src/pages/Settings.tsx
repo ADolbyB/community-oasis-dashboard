@@ -2,13 +2,17 @@
 import {useUserAuth} from "../contexts/UserAuthContext";
 
 // React
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 // Firestore
 import {
   getFirestore,
   doc,
   getDoc,
+  addDoc,
+  collection,
+  serverTimestamp,
+  onSnapshot,
 } from "firebase/firestore";
 import app from "../firebase";
 
@@ -17,19 +21,21 @@ import MainLayout from "../layouts/MainLayout";
 
 // Components
 import Header from "../components/Header";
+import TextInput from "../components/TextInput";
 
 // MaterialUI
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import {makeStyles, createStyles} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+import Button from "@material-ui/core/Button";
 
 // Init firestore
 const db = getFirestore(app);
 
 const infoBlockVerticalPadding = 10;
 
-const useStyles = makeStyles((theme) => createStyles({
+const useStyles = makeStyles(() => createStyles({
   infoBlockBackgroundGrey: {
     background: "#C4C4C4",
     paddingTop: infoBlockVerticalPadding,
@@ -45,7 +51,18 @@ const useStyles = makeStyles((theme) => createStyles({
   },
   checklist: {
     backgroundColor: "#C4C4C4",
-    borderRadius: 15,
+    borderRadius: 5,
+  },
+  visitorsList: {
+    backgroundColor: "#C4C4C4",
+    borderRadius: 5,
+  },
+  header: {
+    marginTop: 30,
+    marginBottom: 15,
+  },
+  submit: {
+    marginTop: 25,
   },
 }));
 
@@ -58,16 +75,95 @@ export default function Settings() {
   const classes = useStyles();
   const [phone, setPhone] = useState<number | null>(null);
   const [address, setAddress] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [licensePlate, setLicensePlate] = useState("");
+  const [visitors, setVisitors] = useState<Array<any>>([]);
+  const componentMounted = useRef(true);
+
   useEffect(() => {
     const detailsRef = doc(db, "users", user.uid, "private", "details");
     (async () => {
       const detailsDoc = await getDoc(detailsRef);
       if (detailsDoc.exists()) {
-        setPhone(detailsDoc.data().phone);
-        setAddress(detailsDoc.data().address);
+        if (componentMounted.current) {
+          setPhone(detailsDoc.data().phone);
+          setAddress(detailsDoc.data().address);
+        }
       }
     })();
+    return () => {
+      componentMounted.current = false;
+    };
   }, []);
+
+  useEffect(() => {
+    const getVisitorsFromFirebase: Array<any> = [];
+    const subscriber = onSnapshot(
+        collection(db, "users", user.uid, "visitors"), (snapshot) => {
+          snapshot.docs.forEach((doc) => {
+            getVisitorsFromFirebase.push({...doc.data(), id: doc.id});
+          });
+          setVisitors(getVisitorsFromFirebase);
+        });
+    return () => subscriber();
+  }, []);
+
+  const visitorsData = {
+    expirationDate: serverTimestamp(),
+    first_name: firstName,
+    last_name: lastName,
+    license_plate: licensePlate,
+  };
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const visitorsRef = collection(
+        db, "users", user.uid, "visitors");
+    await addDoc(visitorsRef, visitorsData);
+  };
+
+  /**
+   * Displays visitors first name
+   * @returns VistitorFirstName
+   */
+  function VisitorFirstName() {
+    return (
+      <>
+        <Grid>
+          {/* eslint-disable-next-line arrow-parens*/}
+          {visitors.map(visitor => (
+            <Typography
+              key={visitor.id}
+              variant="body1">
+              First name: {visitor.first_name}
+            </Typography>
+          ))}
+        </Grid>
+      </>
+    );
+  }
+
+  /**
+   * Displays visitors last name
+   * @returns VistitorLastName
+   */
+  function VisitorLastName() {
+    return (
+      <>
+        <Grid>
+          {/* eslint-disable-next-line arrow-parens*/}
+          {visitors.map(visitor => (
+            <Typography
+              key={visitor.id}
+              variant="body1">
+                Last name: {visitor.last_name}
+            </Typography>
+          ))}
+        </Grid>
+      </>
+    );
+  }
 
   return (
     <MainLayout>
@@ -93,13 +189,84 @@ export default function Settings() {
           </Grid>
         </Grid>
       </Box>
+      <Box>
+        <Typography
+          className={classes.header}
+          variant="h6"
+          component="h2"
+          align="center">
+          Create Visitor
+        </Typography>
+        <Grid container direction="row" justifyContent="center">
+          <TextInput
+            header=""
+            placeholder="First Name"
+            required={true}
+            fullWidth={false}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) =>
+                setFirstName(event.target.value)
+            }
+          />
+          <TextInput
+            header=""
+            placeholder="Last Name"
+            required={true}
+            fullWidth={false}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) =>
+                setLastName(event.target.value)
+            }
+          />
+          <TextInput
+            header=""
+            placeholder="License Plate"
+            required={true}
+            fullWidth={false}
+            onChange={
+              (event: React.ChangeEvent<HTMLInputElement>) =>
+                setLicensePlate(event.target.value)
+            }
+          />
+        </Grid>
+        <Box className={classes.submit}>
+          <Grid container justifyContent="center">
+            <Button
+              variant="contained"
+              color="primary"
+              type="submit"
+              onClick={handleSubmit}
+            >
+                Submit
+            </Button>
+          </Grid>
+        </Box>
+        <Typography
+          className={classes.header}
+          variant="h6"
+          component="h2"
+          align="center">
+          Visitors List
+        </Typography>
+        <Box className={classes.visitorsList}>
+          <Grid container spacing={1} justifyContent="center">
+            <div style={{display: "inline-flex", marginRight: 15}}>
+              <VisitorFirstName />
+            </div>
+            <div style={{display: "inline-flex", marginRight: 15}}>
+              <VisitorLastName />
+            </div>
+          </Grid>
+        </Box>
+      </Box>
       <Typography
+        className={classes.header}
         variant="h6"
         component="h2"
         align="center">
           Checklist
       </Typography>
-      <Box sx={{width: "100%", marginTop: 30}} className={classes.checklist}>
+      <Box className={classes.checklist}>
         Your ready to go!
       </Box>
     </MainLayout>

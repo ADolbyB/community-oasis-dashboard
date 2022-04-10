@@ -118,6 +118,7 @@ export default function UserDataPopup() {
                 header="First name"
                 placeholder="Type here.."
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setFirstName(event.target.value)
@@ -129,6 +130,7 @@ export default function UserDataPopup() {
                 header="Last name"
                 placeholder="Type here..."
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setLastName(event.target.value)
@@ -140,6 +142,7 @@ export default function UserDataPopup() {
                 header="Gender"
                 placeholder="M/F"
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setGender(event.target.value)
@@ -151,6 +154,7 @@ export default function UserDataPopup() {
                 header="address"
                 placeholder="1051 rollands ave"
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setAddress(event.target.value)
@@ -162,6 +166,7 @@ export default function UserDataPopup() {
                 header="Phone"
                 placeholder="9232345673"
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setPhone(event.target.value)
@@ -173,6 +178,7 @@ export default function UserDataPopup() {
                 header="License Plate"
                 placeholder="GR56R2"
                 required={true}
+                fullWidth={true}
                 onChange={
                   (event: React.ChangeEvent<HTMLInputElement>) =>
                     setLicensePlate(event.target.value)

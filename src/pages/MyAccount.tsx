@@ -1,5 +1,5 @@
 // React
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useRef} from "react";
 
 // Auth
 import {useUserAuth} from "../contexts/UserAuthContext";
@@ -35,8 +35,9 @@ const db = getFirestore(app);
  */
 export default function MyAccount() {
   const [value, setValue] = useState<Date | null>(null);
-  const [dataPresence, setDataPresence] = useState(true);
+  const [dataPresence, setDataPresence] = useState(false);
   const {user} = useUserAuth();
+  const componentMounted = useRef(true);
 
 
   useEffect(() => {
@@ -44,11 +45,16 @@ export default function MyAccount() {
     (async () => {
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
-        if (userDoc.data().first_name !== "") {
-          setDataPresence(false);
+        if (componentMounted.current) {
+          if (userDoc.data().first_name === "") {
+            setDataPresence(true);
+          }
         }
       }
     })();
+    return () => {
+      componentMounted.current = false;
+    };
   }, []);
 
   return (
