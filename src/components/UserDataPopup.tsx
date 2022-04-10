@@ -22,6 +22,7 @@ import Backdrop from "@material-ui/core/Backdrop";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Box from "@material-ui/core/Box";
+import Typography from "@material-ui/core/Typography";
 
 // Init firestore
 const db = getFirestore(app);
@@ -41,6 +42,10 @@ const useStyles = makeStyles((theme) => ({
   content: {
     marginTop: 30,
   },
+  modalSize: {
+    marginLeft: 40,
+    marginRight: 40,
+  },
   input: {
     margin: 25,
   },
@@ -58,22 +63,36 @@ export default function UserDataPopup() {
   const [open, setOpen] = useState(true);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
+  const [address, setAddress] = useState("");
+  const [gender, setGender] = useState("");
+  const [licensePlate, setLicensePlate] = useState("");
+  const [phone, setPhone] = useState("");
   const {user} = useUserAuth();
 
   const handleClose = () => {
     setOpen(false);
   };
 
-  const docData = {
+  const userData = {
     first_name: firstName,
     last_name: lastName,
     privilege: 0,
   };
 
-  const handleInfo = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const detailsData = {
+    address: address,
+    gender: gender,
+    license_plate: licensePlate,
+    phone: parseInt(phone),
+  };
+
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     const userRef = doc(db, "users", user.uid);
-    await updateDoc(userRef, docData);
+    const detailsRef = doc(db, "users", user.uid, "private", "details");
+    await updateDoc(userRef, userData);
+    await updateDoc(detailsRef, detailsData);
+
     await handleClose();
   };
   return (
@@ -88,39 +107,90 @@ export default function UserDataPopup() {
     >
       <div className={classes.paper}>
         <form>
-          <Box className={classes.input}>
-            <TextInput
-              header="First name"
-              placeholder="Type here.."
-              required={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setFirstName(event.target.value)
-              }
-            />
-          </Box>
-          <Box className={classes.input}>
-            <TextInput
-              header="Last name"
-              placeholder="Type here..."
-              required={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setLastName(event.target.value)
-              }
-            />
-          </Box>
-          <Box className={classes.submit}>
-            <Grid container justifyContent="center">
-              <Button
-                variant="contained"
-                color="primary"
-                onClick={handleInfo}
-                type="submit"
-              >
-                      Submit
-              </Button>
-            </Grid>
+          <Box className={classes.modalSize}>
+            <Typography
+              component="h2"
+              variant="h6">
+                Enter Resident info
+            </Typography>
+            <Box className={classes.input}>
+              <TextInput
+                header="First name"
+                placeholder="Type here.."
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setFirstName(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TextInput
+                header="Last name"
+                placeholder="Type here..."
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setLastName(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TextInput
+                header="Gender"
+                placeholder="M/F"
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setGender(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TextInput
+                header="address"
+                placeholder="1051 rollands ave"
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setAddress(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TextInput
+                header="Phone"
+                placeholder="9232345673"
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setPhone(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.input}>
+              <TextInput
+                header="License Plate"
+                placeholder="GR56R2"
+                required={true}
+                onChange={
+                  (event: React.ChangeEvent<HTMLInputElement>) =>
+                    setLicensePlate(event.target.value)
+                }
+              />
+            </Box>
+            <Box className={classes.submit}>
+              <Grid container justifyContent="center">
+                <Button
+                  variant="contained"
+                  color="primary"
+                  onClick={handleSubmit}
+                  type="submit"
+                >
+                        Submit
+                </Button>
+              </Grid>
+            </Box>
           </Box>
         </form>
       </div>

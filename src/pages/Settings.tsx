@@ -2,7 +2,15 @@
 import {useUserAuth} from "../contexts/UserAuthContext";
 
 // React
-import React from "react";
+import React, {useState, useEffect} from "react";
+
+// Firestore
+import {
+  getFirestore,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import app from "../firebase";
 
 // Layout
 import MainLayout from "../layouts/MainLayout";
@@ -15,6 +23,9 @@ import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import {makeStyles, createStyles} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
+
+// Init firestore
+const db = getFirestore(app);
 
 const infoBlockVerticalPadding = 10;
 
@@ -45,6 +56,18 @@ const useStyles = makeStyles((theme) => createStyles({
 export default function Settings() {
   const {user} = useUserAuth();
   const classes = useStyles();
+  const [phone, setPhone] = useState<number | null>(null);
+  const [address, setAddress] = useState("");
+  useEffect(() => {
+    const detailsRef = doc(db, "users", user.uid, "private", "details");
+    (async () => {
+      const detailsDoc = await getDoc(detailsRef);
+      if (detailsDoc.exists()) {
+        setPhone(detailsDoc.data().phone);
+        setAddress(detailsDoc.data().address);
+      }
+    })();
+  }, []);
 
   return (
     <MainLayout>
@@ -61,12 +84,12 @@ export default function Settings() {
             <Typography variant="body1">Email: {user.email}</Typography>
           </Grid>
           <Grid item className={classes.infoBlockBackgroundGrey}>
-            <Typography variant="body1">Phone: 555-555-5555</Typography>
+            <Typography variant="body1">Phone: {phone}</Typography>
           </Grid>
         </Grid>
         <Grid item>
           <Grid item className={classes.infoBlockBackgroundWhite}>
-            <Typography variant="body1">Address: 123 Oasis Lane</Typography>
+            <Typography variant="body1">Address: {address}</Typography>
           </Grid>
         </Grid>
       </Box>
