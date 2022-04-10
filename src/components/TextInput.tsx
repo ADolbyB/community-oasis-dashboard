@@ -9,6 +9,7 @@ type Props = {
   placeholder: string,
   header: string,
   required: boolean,
+  onChange: any,
 }
 
 /**
@@ -24,6 +25,7 @@ export default function TextInput(props: Props) {
         placeholder={props.placeholder}
         variant="outlined"
         fullWidth
+        onChange={props.onChange}
         required={props.required}
       />
     </>

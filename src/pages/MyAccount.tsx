@@ -1,5 +1,16 @@
 // React
-import React from "react";
+import React, {useState, useEffect} from "react";
+
+// Auth
+import {useUserAuth} from "../contexts/UserAuthContext";
+
+// Firestore
+import {
+  getFirestore,
+  doc,
+  getDoc,
+} from "firebase/firestore";
+import app from "../firebase";
 
 // MaterialUI
 import TextField from "@mui/material/TextField";
@@ -12,16 +23,37 @@ import MainLayout from "../layouts/MainLayout";
 
 // Components
 import Header from "../components/Header";
+import UserDataPopup from "../components/UserDataPopup";
+
+// Init firestore
+const db = getFirestore(app);
+
+
 /**
  * A web page view for account management
  * @returns My account page view
  */
 export default function MyAccount() {
-  const [value, setValue] = React.useState<Date | null>(null);
+  const [value, setValue] = useState<Date | null>(null);
+  const [dataPresence, setDataPresence] = useState(true);
+  const {user} = useUserAuth();
 
+
+  useEffect(() => {
+    const userRef = doc(db, "users", user.uid);
+    (async () => {
+      const userDoc = await getDoc(userRef);
+      if (userDoc.exists()) {
+        if (userDoc.data().first_name !== "") {
+          setDataPresence(false);
+        }
+      }
+    })();
+  }, []);
 
   return (
     <MainLayout>
+      { dataPresence ? <UserDataPopup/> : <span />}
       <div>
         <Header title="My Account" />
         <p>Welcome, if you are a new Resident please Select a date below:</p>

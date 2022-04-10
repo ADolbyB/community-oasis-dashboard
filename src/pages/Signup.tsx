@@ -42,16 +42,26 @@ export default function Signup() {
   const {signUp, updateDisplayName} = useUserAuth();
   const navigate = useNavigate();
 
+
   const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
     try {
-      await signUp(email, password);
-      await updateDisplayName(firstName, lastName);
-      navigate("/my-account");
+      if (email !== "" &&
+        password !== "" &&
+        firstName !== "" &&
+        lastName !== ""
+      ) {
+        await signUp(email, password);
+        await updateDisplayName(firstName, lastName);
+        navigate("/my-account");
+      } else {
+        setError("Didn't fill out all fields");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
+        console.dir(error.message);
       } else {
         setError(`Unexpected Error: ${error}`);
       }
@@ -79,7 +89,7 @@ export default function Signup() {
                 variant="h3"
                 component="h1"
                 align="center">
-                  Sign up
+                Sign up
               </Typography>
               <TextField
                 className={classes.inputField}
@@ -140,7 +150,7 @@ export default function Signup() {
                 variant="contained"
                 color="secondary"
                 fullWidth>
-                  Create Account
+                Create Account
               </Button>
             </CardActions>
             <CardActions>
