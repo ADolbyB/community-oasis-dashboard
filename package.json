@@ -10,7 +10,7 @@
     "build": "npm run build:functions && npm run build:webapp",
     "build:webapp": "npm run check && parcel build",
     "build:functions": "npm --prefix functions/ run build",
-    "serve": "firebase emulators:start",
+    "serve": "firebase emulators:start --import test_data/",
     "serve:functions": "npm --prefix functions/ run serve",
     "shell": "npm --prefix functions run shell",
     "deploy:functions": "npm --prefix functions run deploy",
