@@ -20,11 +20,11 @@ jobs:
       - name: "Webapp Linting"
         run: npm run lint
       - name: "Install Functions Dependencies"
-        working_directory: "./functions"
+        working-directory: "./functions"
         run: npm ci
       - name: "Functions Type Checking"
-        working_directory: "./functions"
+        working-directory: "./functions"
         run: npm run check
       - name: "Functions Linting"
-        working_directory: "./functions"
+        working-directory: "./functions"
         run: npm run lint
