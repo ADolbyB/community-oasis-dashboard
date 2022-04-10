@@ -20,3 +20,10 @@ export interface visitorData {
   last_name: string,
   license_plate: string
 }
+
+export interface transactionData {
+  date: Date,
+  payment: number,
+  transaction_type: number,
+  user: any
+}
