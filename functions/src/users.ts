@@ -1,18 +1,18 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 
+import { db } from "./admin";
 import { UserRecord } from "firebase-functions/v1/auth";
 
-
-// Initializing Access to Firestore
-admin.initializeApp();
-
-// Auth Trigger on new User Signup
+/**
+ * Creates a new user document for a user the first time they sign-up.
+ *
+ * @activation auth.user().onCreate() On first time sign-up for user
+ */
 export const newUserActivation = functions.auth.user().onCreate(
     (user: UserRecord) => {
       functions.logger.info(`New user created: ${user.email} ${user.uid}`);
 
-      const userDoc = admin.firestore().collection("users").doc(user.uid);
+      const userDoc = db.collection("users").doc(user.uid);
 
       // Fill public user info with properties
       userDoc.set({
