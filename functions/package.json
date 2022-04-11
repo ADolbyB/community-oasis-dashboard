@@ -2,6 +2,7 @@
   "name": "functions",
   "scripts": {
     "lint": "eslint --ext .js,.ts .",
+    "fix": "eslint --ext .js,.ts --fix .",
     "check": "tsc --noEmit",
     "build": "npm run lint && tsc",
     "build:watch": "npm run lint && tsc --watch --preserveWatchOutput",
