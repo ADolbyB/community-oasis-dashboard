@@ -2,7 +2,7 @@
 import React, {useState, useEffect, useRef} from "react";
 
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
 // Firestore
 import {
@@ -10,7 +10,7 @@ import {
   doc,
   getDoc,
 } from "firebase/firestore";
-import app from "../firebase";
+import app from "../../firebase";
 
 // MaterialUI
 import TextField from "@mui/material/TextField";
@@ -19,11 +19,11 @@ import LocalizationProvider from "@mui/lab/LocalizationProvider";
 import DatePicker from "@mui/lab/DatePicker";
 
 // Layout
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 // Components
-import Header from "../components/Header";
-import UserDataPopup from "../components/UserDataPopup";
+import Header from "../../components/Header";
+import UserDataPopup from "./components/UserDataPopup";
 
 // Init firestore
 const db = getFirestore(app);
@@ -41,7 +41,7 @@ export default function MyAccount() {
 
 
   useEffect(() => {
-    const userRef = doc(db, "users", user.uid);
+    const userRef = doc(db, "users", String(user.uid));
     (async () => {
       const userDoc = await getDoc(userRef);
       if (userDoc.exists()) {
@@ -56,6 +56,7 @@ export default function MyAccount() {
       componentMounted.current = false;
     };
   }, []);
+
 
   return (
     <MainLayout>

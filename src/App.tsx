@@ -12,12 +12,14 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import "./App.css";
 
 // Pages
-import Login from "./pages/Login";
-import MyAccount from "./pages/MyAccount";
-import Settings from "./pages/Settings";
-import Signup from "./pages/Signup";
-import Payment from "./pages/Payment";
-import ReportIssue from "./pages/ReportIssue";
+import Login from "./pages/Login/Login";
+import MyAccount from "./pages/MyAccount/MyAccount";
+import Settings from "./pages/Settings/Settings";
+import Signup from "./pages/Signup/Signup";
+import Payment from "./pages/Payment/Payment";
+import ReportIssue from "./pages/ReportIssue/ReportIssue";
+import Surveys from "./pages/Surveys/Surveys";
+import CreateSurvey from "./pages/Surveys/CreateSurvey";
 
 /**
  * Starts the web application
@@ -38,6 +40,16 @@ function App() {
           <Route path="/payment" element={
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          } />
+          <Route path="/surveys" element={
+            <ProtectedRoute>
+              <Surveys />
+            </ProtectedRoute>
+          } />
+          <Route path="/surveys/create-survey" element={
+            <ProtectedRoute>
+              <CreateSurvey />
             </ProtectedRoute>
           } />
           <Route path="/report-issue" element={

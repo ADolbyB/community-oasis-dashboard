@@ -1,5 +1,5 @@
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
 // React
 import React, {useState, useEffect, useRef} from "react";
@@ -14,14 +14,14 @@ import {
   serverTimestamp,
   onSnapshot,
 } from "firebase/firestore";
-import app from "../firebase";
+import app from "../../firebase";
 
 // Layout
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 // Components
-import Header from "../components/Header";
-import TextInput from "../components/TextInput";
+import Header from "../../components/Header";
+import TextInput from "../../components/TextInput";
 
 // MaterialUI
 import Typography from "@material-ui/core/Typography";
@@ -51,12 +51,9 @@ const useStyles = makeStyles(() => createStyles({
     marginRight: 30,
   },
   checklist: {
-    "borderRadius": 5,
-    "background": "#C4C4C4",
-    "width": "100%",
-    "display": "flex",
-    "flex-direction": "row",
-    "justify-content": "space-between",
+    borderRadius: 5,
+    background: "#C4C4C4",
+    width: "30%",
   },
   visitorsList: {
     borderRadius: 5,
@@ -89,7 +86,7 @@ export default function Settings() {
   const componentMounted = useRef(true);
 
   useEffect(() => {
-    const detailsRef = doc(db, "users", user.uid, "private", "details");
+    const detailsRef = doc(db, "users", String(user.uid), "private", "details");
     (async () => {
       const detailsDoc = await getDoc(detailsRef);
       if (detailsDoc.exists()) {
@@ -124,6 +121,7 @@ export default function Settings() {
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
     const visitorsRef = collection(
         db, "users", String(user.uid), "visitors");
     await addDoc(visitorsRef, visitorsData);

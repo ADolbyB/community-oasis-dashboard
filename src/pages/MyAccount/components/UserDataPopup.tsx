@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../../contexts/UserAuthContext";
 
 // Firestore
 import {
@@ -10,10 +10,10 @@ import {
   doc,
   updateDoc,
 } from "firebase/firestore";
-import app from "../firebase";
+import app from "../../../firebase";
 
 // Components
-import TextInput from "./TextInput";
+import TextInput from "../../../components/TextInput";
 
 // MaterialUI
 import {makeStyles} from "@material-ui/core/styles";
@@ -67,7 +67,7 @@ export default function UserDataPopup() {
   const [gender, setGender] = useState("");
   const [licensePlate, setLicensePlate] = useState("");
   const [phone, setPhone] = useState("");
-  const {user} = useUserAuth();
+  const {user, updateDisplayName} = useUserAuth();
 
   const handleClose = () => {
     setOpen(false);
@@ -88,8 +88,9 @@ export default function UserDataPopup() {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const userRef = doc(db, "users", user.uid);
-    const detailsRef = doc(db, "users", user.uid, "private", "details");
+    const userRef = doc(db, "users", String(user.uid));
+    const detailsRef = doc(db, "users", String(user.uid), "private", "details");
+    await updateDisplayName(firstName, lastName);
     await updateDoc(userRef, userData);
     await updateDoc(detailsRef, detailsData);
 
@@ -110,7 +111,7 @@ export default function UserDataPopup() {
           <Box className={classes.modalSize}>
             <Typography
               component="h2"
-              variant="h6">
+              variant="h4">
                 Enter Resident info
             </Typography>
             <Box className={classes.input}>

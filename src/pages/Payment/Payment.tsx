@@ -2,7 +2,7 @@
 import React, {useState} from "react";
 
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
 // Firestore
 import {
@@ -12,15 +12,15 @@ import {
   serverTimestamp,
   doc,
 } from "firebase/firestore";
-import app from "../firebase";
+import app from "../../firebase";
 
 // Layout
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 // Components
-import Header from "../components/Header";
-import TextInput from "../components/TextInput";
-import SelectInput from "../components/SelectInput";
+import Header from "../../components/Header";
+import TextInput from "../../components/TextInput";
+import SelectInput from "../../components/SelectInput";
 
 // MaterialUI
 import {makeStyles} from "@material-ui/core";
@@ -48,11 +48,11 @@ const useStyles = makeStyles({
 const paymentTypes = [
   {
     value: "0",
-    label: "Initial Deposit",
+    label: "Quarterly Fee",
   },
   {
     value: "1",
-    label: "Quarterly Fee",
+    label: "Initial Deposit",
   },
 ];
 
@@ -90,7 +90,7 @@ export default function Payment() {
     date: serverTimestamp(),
     payment: amount,
     transaction_type: parseInt(paymentType),
-    user: doc(db, "users", user.uid),
+    user: doc(db, "users", String(user.uid)),
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -135,7 +135,7 @@ export default function Payment() {
               fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDate(event.target.value)
+                  setCardNumber(event.target.value)
               }
             />
           </Box>

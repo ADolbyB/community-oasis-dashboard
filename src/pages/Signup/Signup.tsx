@@ -1,5 +1,5 @@
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
@@ -32,23 +32,31 @@ const useStyles = makeStyles({
  * A login page view, routes to other components.
  * @returns Login Page
  */
-export default function Login() {
+export default function Signup() {
   const classes = useStyles();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {logIn} = useUserAuth();
+  const {signUp} = useUserAuth();
   const navigate = useNavigate();
 
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
+
+  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
     try {
-      await logIn(email, password);
-      navigate("/my-account");
+      if (email !== "" &&
+        password !== ""
+      ) {
+        await signUp(email, password);
+        navigate("/my-account");
+      } else {
+        setError("Didn't fill out all fields");
+      }
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
+        console.dir(error.message);
       } else {
         setError(`Unexpected Error: ${error}`);
       }
@@ -72,7 +80,12 @@ export default function Login() {
             variant="outlined"
           >
             <CardContent>
-              <Typography variant="h3" component="h1">Oasis Portal</Typography>
+              <Typography
+                variant="h3"
+                component="h1"
+                align="center">
+                Sign up
+              </Typography>
               <TextField
                 className={classes.inputField}
                 onChange={
@@ -102,17 +115,16 @@ export default function Login() {
             </CardContent>
             <CardActions>
               <Button
-                onClick={handleLogin}
+                onClick={handleSignup}
                 variant="contained"
                 color="secondary"
                 fullWidth>
-                  Log In
+                Create Account
               </Button>
             </CardActions>
             <CardActions>
-              <Link href="/signup">Create a new account</Link>
+              <Link href="/">Already have an account? Login</Link>
             </CardActions>
-
           </Card>
         </Grid>
       </form>

@@ -2,10 +2,10 @@
 import React from "react";
 
 // Layout
-import MainLayout from "../layouts/MainLayout";
+import MainLayout from "../../layouts/MainLayout";
 
 // Components
-import Header from "../components/Header";
+import Header from "../../components/Header";
 
 // MaterialUI
 import TextField from "@material-ui/core/TextField";

@@ -1,5 +1,5 @@
 // Auth
-import {useUserAuth} from "../contexts/UserAuthContext";
+import {useUserAuth} from "../../contexts/UserAuthContext";
 
 // React
 import React, {useState} from "react";
@@ -24,7 +24,7 @@ const useStyles = makeStyles({
   },
   loginCard: {
     width: 400,
-    height: 500,
+    height: 350,
   },
 });
 
@@ -32,36 +32,23 @@ const useStyles = makeStyles({
  * A login page view, routes to other components.
  * @returns Login Page
  */
-export default function Signup() {
+export default function Login() {
   const classes = useStyles();
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const {signUp, updateDisplayName} = useUserAuth();
+  const {logIn} = useUserAuth();
   const navigate = useNavigate();
 
-
-  const handleSignup = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setError("");
     try {
-      if (email !== "" &&
-        password !== "" &&
-        firstName !== "" &&
-        lastName !== ""
-      ) {
-        await signUp(email, password);
-        await updateDisplayName(firstName, lastName);
-        navigate("/my-account");
-      } else {
-        setError("Didn't fill out all fields");
-      }
+      await logIn(email, password);
+      navigate("/my-account");
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
-        console.dir(error.message);
       } else {
         setError(`Unexpected Error: ${error}`);
       }
@@ -85,38 +72,7 @@ export default function Signup() {
             variant="outlined"
           >
             <CardContent>
-              <Typography
-                variant="h3"
-                component="h1"
-                align="center">
-                Sign up
-              </Typography>
-              <TextField
-                className={classes.inputField}
-                onChange={
-                  (event: React.ChangeEvent<HTMLInputElement>) =>
-                    setFirstName(event.target.value)
-                }
-                variant="standard"
-                label="First Name"
-                size="small"
-                type="text"
-                fullWidth
-                required
-              ></TextField>
-              <TextField
-                className={classes.inputField}
-                onChange={
-                  (event: React.ChangeEvent<HTMLInputElement>) =>
-                    setLastName(event.target.value)
-                }
-                variant="standard"
-                label="Last Name"
-                size="small"
-                type="text"
-                fullWidth
-                required
-              ></TextField>
+              <Typography variant="h3" component="h1">Oasis Portal</Typography>
               <TextField
                 className={classes.inputField}
                 onChange={
@@ -146,16 +102,17 @@ export default function Signup() {
             </CardContent>
             <CardActions>
               <Button
-                onClick={handleSignup}
+                onClick={handleLogin}
                 variant="contained"
                 color="secondary"
                 fullWidth>
-                Create Account
+                  Log In
               </Button>
             </CardActions>
             <CardActions>
-              <Link href="/">Already have an account? Login</Link>
+              <Link href="/signup">Create a new account</Link>
             </CardActions>
+
           </Card>
         </Grid>
       </form>
