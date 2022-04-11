@@ -1,6 +1,19 @@
 // React
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
+
+// Auth
+import {useUserAuth} from "../../contexts/UserAuthContext";
+
+// Firestore
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  serverTimestamp,
+  doc,
+} from "firebase/firestore";
+import app from "../../firebase";
 
 // Layout
 import MainLayout from "../../layouts/MainLayout";
@@ -15,42 +28,21 @@ import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
-import FormControl from "@material-ui/core/FormControl";
-import RadioGroup from "@material-ui/core/RadioGroup";
-import Radio from "@material-ui/core/Radio";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import AddCircleOutlineIcon from "@mui/icons-material/AddCircleOutline";
 
+// Init firestore
+const db = getFirestore(app);
 
-const useStyles = makeStyles((theme) => ({
-  modal: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  paper: {
-    backgroundColor: theme.palette.background.paper,
-    border: "2px solid #000",
-    boxShadow: theme.shadows[5],
-    padding: theme.spacing(2, 4, 3),
-  },
-  content: {
-    marginTop: 30,
-  },
-  modalSize: {
-    marginLeft: 40,
-    marginRight: 40,
-  },
+const useStyles = makeStyles(() => ({
   input: {
     margin: 25,
   },
+  questionInput: {
+    margin: 15,
+    marginLeft: 40,
+    width: 800,
+  },
   submit: {
     marginTop: 40,
-  },
-  addBtn: {
-    position: "fixed",
-    right: 90,
-    top: 100,
   },
 }));
 
@@ -58,92 +50,43 @@ const useStyles = makeStyles((theme) => ({
  * Popup to create survey
  * @returns SurveyPopup
  */
-export default function SurveyPopup() {
+export default function CreateSurvey() {
   const classes = useStyles();
   const navigate = useNavigate();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [question, setQuestion] = useState("");
-  const [addQuestion, setAddQuestion] = useState(1);
-  const [questionArray, setQuestionArray] = useState<Array<any>>([]);
+  const [question1, setQuestion1] = useState("");
+  const [question2, setQuestion2] = useState("");
+  const [question3, setQuestion3] = useState("");
+  const [question4, setQuestion4] = useState("");
+  const {user} = useUserAuth();
 
-  const handleSubmit = async () => {
-    navigate("/surveys");
+  const questionareData = {
+    created_by: doc(db, "users", String(user.uid)),
+    created_date: serverTimestamp(),
+    description: description,
+    questions: [question1, question2, question3, question4],
+    tags: "survey",
+    title: title,
   };
 
-  useEffect(() => {
-    const questionAmountArray : any[] = [];
-    for (let i = 0; i < addQuestion; i++) {
-      questionAmountArray.push(<Question id={i}/>);
-    }
-    setQuestionArray(questionAmountArray);
-  }, [addQuestion]);
-
-  type Props = {
-    id: number,
-  }
-  /**
-   * Question the user fills out
-   * @param {Prop} props - Key for the question
-   * @returns Question
-   */
-  function Question(props: Props) {
-    return (
-      <Box key={props.id}>
-        <TextField
-          placeholder="Type here..."
-          variant="outlined"
-          fullWidth
-          onChange={
-            (event: React.ChangeEvent<HTMLInputElement>) =>
-              setQuestion(event.target.value)
-          }
-          required
-        />
-        <FormControl>
-          <RadioGroup
-            row
-            name="radio-answer-group"
-          >
-            <FormControlLabel
-              value={true}
-              control={<Radio />}
-              label="True"
-            />
-            <FormControlLabel
-              value={false}
-              control={<Radio />}
-              label="False"
-            />
-          </RadioGroup>
-        </FormControl>
-      </Box>
-    );
-  }
+  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const questionareRef = collection(db, "questionares");
+    await addDoc(questionareRef, questionareData);
+    navigate("/surveys");
+  };
 
   return (
     <MainLayout>
       <form>
-        <Box className={classes.modalSize}>
+        <Box>
           <Typography
             component="h2"
             variant="h4"
             align="center">
               Create a survey
           </Typography>
-          <Box className={classes.addBtn}>
-            <Button
-              onClick={
-                () => setAddQuestion(addQuestion + 1)
-              }
-              variant="outlined"
-              startIcon={<AddCircleOutlineIcon />}
-              color="secondary"
-
-            >
-              Question
-            </Button>
-          </Box>
           <Box className={classes.input}>
             <TextInput
               header="Title"
@@ -152,7 +95,7 @@ export default function SurveyPopup() {
               fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDescription(event.target.value)
+                  setTitle(event.target.value)
               }
             />
           </Box>
@@ -163,17 +106,55 @@ export default function SurveyPopup() {
               fullWidth
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setTitle(event.target.value)
+                  setDescription(event.target.value)
               }
-              required
+              required={true}
             />
           </Box>
           <Box className={classes.input}>
             <Typography component="h2" variant="h6">Questions</Typography>
-            {/* eslint-disable-next-line arrow-parens */}
-            {questionArray.map(question => (
-              question
-            ))}
+            <Typography component="h3" variant="body2">
+            </Typography>
+          </Box>
+          <Box>
+            <TextField
+              className={classes.questionInput}
+              placeholder="Type here..."
+              variant="standard"
+              fullWidth
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setQuestion1(event.target.value)}
+            />
+          </Box>
+          <Box>
+            <TextField
+              className={classes.questionInput}
+              placeholder="Type here..."
+              variant="standard"
+              fullWidth
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setQuestion2(event.target.value)}
+            />
+          </Box>
+          <Box>
+            <TextField
+              className={classes.questionInput}
+              placeholder="Type here..."
+              variant="standard"
+              fullWidth
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setQuestion3(event.target.value)}
+            />
+          </Box>
+          <Box>
+            <TextField
+              className={classes.questionInput}
+              placeholder="Type here..."
+              variant="standard"
+              fullWidth
+              onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                setQuestion4(event.target.value)}
+            />
           </Box>
           <Box className={classes.submit}>
             <Grid container justifyContent="center">
