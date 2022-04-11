@@ -27,5 +27,6 @@ module.exports = {
     "import/no-unresolved": 0,
     "no-console": 1,
     "object-curly-spacing": ["error", "always"],
+    "valid-jsdoc": ["error", {"prefer": {"return": "returns"}, "requireParamType": false, "requireReturnType": false}]
   },
 };
