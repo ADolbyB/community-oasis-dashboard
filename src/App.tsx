@@ -19,6 +19,7 @@ import Signup from "./pages/Signup/Signup";
 import Payment from "./pages/Payment/Payment";
 import ReportIssue from "./pages/ReportIssue/ReportIssue";
 import Surveys from "./pages/Surveys/Surveys";
+import Survey from "./pages/Surveys/Survey";
 import CreateSurvey from "./pages/Surveys/CreateSurvey";
 
 /**
@@ -50,6 +51,11 @@ function App() {
           <Route path="/surveys/create-survey" element={
             <ProtectedRoute>
               <CreateSurvey />
+            </ProtectedRoute>
+          } />
+          <Route path="/surveys/:slug" element={
+            <ProtectedRoute>
+              <Survey />
             </ProtectedRoute>
           } />
           <Route path="/report-issue" element={
