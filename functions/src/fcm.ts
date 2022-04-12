@@ -7,7 +7,7 @@ import * as admin from "firebase-admin";
 import { db } from "./admin";
 
 // Re-namespacing this function that I'm using extensively
-const arrayUnion = admin.firestore.FieldValue.arrayUnion;
+// const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
 /**
  * Get uid of users who haven't submitted a payment this quarter
@@ -71,10 +71,10 @@ export const sendQuarterlyFunction = functions.https.onRequest(
         const unpaidUsers = await getUnpaidUsers();
         functions.logger.log(`Sending payment notification to: ${unpaidUsers}`);
 
-        const notif: admin.messaging.Notification = {
-          title: "Maintenance Payment Due!",
-          body: "It's time to make your quarterly maintenance payment.",
-        };
+        // const notif: admin.messaging.Notification = {
+        //   title: "Maintenance Payment Due!",
+        //   body: "It's time to make your quarterly maintenance payment.",
+        // };
 
         // const payload: admin.messaging.Message = {
         //   notification: notif,
