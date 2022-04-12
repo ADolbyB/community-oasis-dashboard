@@ -21,6 +21,10 @@ import ReportIssue from "./pages/ReportIssue/ReportIssue";
 import Surveys from "./pages/Surveys/Surveys";
 import Survey from "./pages/Surveys/Survey";
 import CreateSurvey from "./pages/Surveys/CreateSurvey";
+import Groups from "./pages/Groups/Groups";
+import CreateGroup from "./pages/Groups/CreateGroup";
+import Group from "./pages/Groups/Group";
+import CreateEvent from "./pages/Groups/GroupEvents/CreateEvent";
 
 /**
  * Starts the web application
@@ -41,6 +45,26 @@ function App() {
           <Route path="/payment" element={
             <ProtectedRoute>
               <Payment />
+            </ProtectedRoute>
+          } />
+          <Route path="/groups" element={
+            <ProtectedRoute>
+              <Groups />
+            </ProtectedRoute>
+          } />
+          <Route path="/groups/create-group" element={
+            <ProtectedRoute>
+              <CreateGroup />
+            </ProtectedRoute>
+          } />
+          <Route path="/groups/:slug" element={
+            <ProtectedRoute>
+              <Group />
+            </ProtectedRoute>
+          } />
+          <Route path="/groups/:slug/create-event" element={
+            <ProtectedRoute>
+              <CreateEvent />
             </ProtectedRoute>
           } />
           <Route path="/surveys" element={
