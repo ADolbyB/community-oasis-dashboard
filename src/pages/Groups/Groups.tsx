@@ -6,8 +6,6 @@ import {useNavigate} from "react-router-dom";
 import {
   getFirestore,
   collection,
-  query,
-  where,
 } from "firebase/firestore";
 import {useCollectionOnce} from "react-firebase-hooks/firestore";
 import app from "../../firebase";
@@ -58,25 +56,24 @@ const useStyles = makeStyles(() => ({
 export default function Surveys() {
   const navigate = useNavigate();
   const classes = useStyles();
-  const surveysRef = collection(db, "questionares");
-  const q = query(surveysRef, where("tags", "==", "survey"));
-  const [snapshot, loading, error] = useCollectionOnce(q);
+  const surveysRef = collection(db, "groups");
+  const [snapshot, loading, error] = useCollectionOnce(surveysRef);
 
-  const createSurvey = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const createGroup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    navigate("create-survey");
+    navigate("create-group");
   };
 
 
   return (
     <MainLayout>
-      <Header title="Surveys" />
+      <Header title="Groups" />
       <Button
         variant="outlined"
         className={classes.createSurveyBtn}
         color="primary"
-        onClick={createSurvey}>
-        Create Survey
+        onClick={createGroup}>
+        Create Group
       </Button>
       <Box sx={{width: "100%", marginLeft: 15, marginTop: 30}}>
         <Grid container direction="column">
@@ -85,11 +82,11 @@ export default function Surveys() {
               <React.Fragment key={doc.id}>
                 <Box>
                   <Link
-                    href={`surveys/${doc.id}`}
+                    href={`groups/${doc.id}`}
                     variant="subtitle1"
                     color="inherit"
                   >
-                    {doc.data().title}
+                    {doc.data().name}
                   </Link>
                 </Box>
               </React.Fragment>

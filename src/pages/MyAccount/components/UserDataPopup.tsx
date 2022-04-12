@@ -93,7 +93,6 @@ export default function UserDataPopup() {
     await updateDisplayName(firstName, lastName);
     await updateDoc(userRef, userData);
     await updateDoc(detailsRef, detailsData);
-
     await handleClose();
   };
   return (
