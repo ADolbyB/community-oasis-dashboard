@@ -1,5 +1,13 @@
+// Firebase Cloud Messaging Functions
+// Author: Midlight25
+
 import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+
 import { db } from "./admin";
+
+// Re-namespacing this function that I'm using extensively
+const arrayUnion = admin.firestore.FieldValue.arrayUnion;
 
 /**
  * Get uid of users who haven't submitted a payment this quarter
@@ -52,6 +60,9 @@ async function getUnpaidUsers(): Promise<Array<string>> {
   return unpaidUsers;
 }
 
+/**
+ * Send notification to users who haven't made a quarterly payment yet.
+ */
 export const sendQuarterlyFunction = functions.https.onRequest(
     async (req, res) => {
       functions.logger.log("sendQuarterlyFunction() has been called.");
@@ -59,9 +70,41 @@ export const sendQuarterlyFunction = functions.https.onRequest(
       try {
         const unpaidUsers = await getUnpaidUsers();
         functions.logger.log(`Sending payment notification to: ${unpaidUsers}`);
+
+        const notif: admin.messaging.Notification = {
+          title: "Maintenance Payment Due!",
+          body: "It's time to make your quarterly maintenance payment.",
+        };
+
+        // const payload: admin.messaging.Message = {
+        //   notification: notif,
+        //   webpush: {
+
+        //   }
+
+        // };
+
         res.sendStatus(200);
       } catch (error) {
         functions.logger.error("Unknown Error Occurred:" + error);
         res.sendStatus(500);
       }
     });
+
+// Subscribe device to notification topic
+export const subscribeToTopic = functions.https.onCall(
+    async (data) => {
+      functions.logger.log(`New subscriber "${data.token}" for ${data.topic}`);
+      await admin.messaging().subscribeToTopic(data.token, data.topic);
+      return `subscribed to ${data.topic}`;
+    }
+);
+
+// Unsubscribe device from notification topic
+export const unsubscribeFromTopic = functions.https.onCall(
+    async (data) => {
+      await admin.messaging().unsubscribeFromTopic(data.token, data.topic);
+      functions.logger.log(`Subscriber "${data.token}" removed: ${data.topic}`);
+      return `unsubscribed from ${data.topic}`;
+    }
+);
