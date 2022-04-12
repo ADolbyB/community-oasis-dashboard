@@ -1,3 +1,6 @@
+// Firebase Admin Configuration File
+// Author: Midlight25
+
 import * as admin from "firebase-admin";
 
 admin.initializeApp();

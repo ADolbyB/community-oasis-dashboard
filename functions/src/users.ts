@@ -1,3 +1,6 @@
+// Auth User Actions Cloud Functions File
+// Author: Midlight25
+
 import * as functions from "firebase-functions";
 
 import { db } from "./admin";

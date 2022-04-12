@@ -1,6 +1,9 @@
+// Firebase Cloud Functions Index File
+// Author: Midlight25
+
 import * as functions from "firebase-functions";
 import { newUserActivation } from "./users";
-import { sendQuarterlyFunction } from "./notifications";
+import { sendQuarterlyFunction } from "./fcm";
 
 // Start writing Firebase Functions
 // https://firebase.google.com/docs/functions/typescript
