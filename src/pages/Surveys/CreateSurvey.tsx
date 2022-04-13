@@ -63,7 +63,7 @@ export default function CreateSurvey() {
 
   const questionareData = {
     created_by: doc(db, "users", String(user.uid)),
-    created_date: serverTimestamp(),
+    date_created: serverTimestamp(),
     description: description,
     questions: [question1, question2, question3, question4],
     tags: "survey",
