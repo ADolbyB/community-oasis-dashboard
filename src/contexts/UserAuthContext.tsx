@@ -9,6 +9,7 @@ import {
   signOut,
   updateProfile,
   connectAuthEmulator,
+  updateEmail,
 } from "firebase/auth";
 
 // Firestore
@@ -34,7 +35,8 @@ interface IAuthContext {
   logIn: any,
   signUp: any,
   logOut: any,
-  updateDisplayName: any
+  updateDisplayName: any,
+  updateUserEmail: any,
 }
 
 type Prop = {
@@ -92,6 +94,17 @@ export function UserAuthContextProvider({children}: Prop) {
     }
   }
 
+  /**
+   * Used to enter email name into database.
+   * @param {string} email - Email used by user.
+   * @returns updateProfile
+   */
+  function updateUserEmail(email: string) {
+    if (auth.currentUser !== null) {
+      return updateEmail(auth.currentUser, (email));
+    }
+  }
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -107,7 +120,7 @@ export function UserAuthContextProvider({children}: Prop) {
 
   return (
     <userAuthContext.Provider
-      value={{user, logIn, signUp, logOut, updateDisplayName}}
+      value={{user, logIn, signUp, logOut, updateDisplayName, updateUserEmail}}
     >
       {children}
     </userAuthContext.Provider>

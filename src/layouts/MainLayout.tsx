@@ -1,7 +1,20 @@
 // React
-import React from "react";
+import React, {useEffect} from "react";
 import {useNavigate} from "react-router-dom";
 import NavBar from "./components/NavBar";
+
+// Auth
+import {useUserAuth} from "../contexts/UserAuthContext";
+
+// Firestore
+import {
+  getFirestore,
+  doc,
+} from "firebase/firestore";
+import {
+  useDocument,
+} from "react-firebase-hooks/firestore";
+import app from "../firebase";
 
 // Material UI
 import Drawer from "@material-ui/core/Drawer";
@@ -16,6 +29,10 @@ import PaymentIcon from "@mui/icons-material/Payment";
 import GroupsIcon from "@mui/icons-material/Groups";
 import PollIcon from "@mui/icons-material/Poll";
 import ReportProblemIcon from "@mui/icons-material/ReportProblem";
+import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
+
+// Init firestore
+const db = getFirestore(app);
 
 const drawerWidth = 240;
 
@@ -48,7 +65,7 @@ const useStyles = makeStyles((theme) => createStyles({
   },
 }));
 
-const tabs = [
+let tabs = [
   {
     text: "My Account",
     id: "my-account",
@@ -89,6 +106,49 @@ type Prop = {
 export default function MainLayout({children}: Prop) {
   const classes = useStyles();
   const navigate = useNavigate();
+  const {user} = useUserAuth();
+
+  // Users Querys
+  const userRef = doc(db, "users", String(user.uid));
+  const [snapshot, loading, error] = useDocument(userRef);
+
+  useEffect(() => {
+    if (snapshot?.data()?.privilege === 1) {
+      tabs = [
+        {
+          text: "My Account",
+          id: "my-account",
+          icon: <HomeIcon />,
+        },
+        {
+          text: "Make a Payment",
+          id: "payment",
+          icon: <PaymentIcon />,
+        },
+        {
+          text: "Groups",
+          id: "groups",
+          icon: <GroupsIcon />,
+        },
+        {
+          text: "Community Surveys",
+          id: "surveys",
+          icon: <PollIcon />,
+        },
+        {
+          text: "Report Issue",
+          id: "report-issue",
+          icon: <ReportProblemIcon />,
+        },
+        {
+          text: "Admin",
+          id: "admin",
+          icon: <AdminPanelSettingsIcon />,
+        },
+      ];
+    }
+  });
+
 
   return (
     <div className={classes.root}>
