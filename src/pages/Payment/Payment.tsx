@@ -1,5 +1,8 @@
 // React
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
+
+// Firebase App Config
+import app from "../../firebase";
 
 // Auth
 import {useUserAuth} from "../../contexts/UserAuthContext";
@@ -8,11 +11,18 @@ import {useUserAuth} from "../../contexts/UserAuthContext";
 import {
   getFirestore,
   collection,
+  query,
+  where,
   addDoc,
   serverTimestamp,
   doc,
 } from "firebase/firestore";
-import app from "../../firebase";
+
+// React Firebase Hooks
+import {useCollection} from "react-firebase-hooks/firestore";
+
+// Utilities
+import {startOfQuarter, lastDayOfQuarter, format} from "date-fns";
 
 // Layout
 import MainLayout from "../../layouts/MainLayout";
@@ -27,6 +37,7 @@ import {makeStyles} from "@material-ui/core";
 import Box from "@material-ui/core/Box";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
+import {Alert, AlertTitle} from "@mui/material";
 
 // Init firestore
 const db = getFirestore(app);
@@ -48,11 +59,11 @@ const useStyles = makeStyles({
 const paymentTypes = [
   {
     value: "0",
-    label: "Quarterly Fee",
+    label: "Initial Deposit",
   },
   {
     value: "1",
-    label: "Initial Deposit",
+    label: "Quarterly Fee",
   },
 ];
 
@@ -79,27 +90,66 @@ export default function Payment() {
   const classes = useStyles();
   const [card, setCard] = useState("");
   const [paymentType, setPaymentType] = useState("");
-  const [date, setDate] = useState("");
   const [amount, setAmount] = useState("");
-  const [note, setNote] = useState("");
-  const [cardNumber, setCardNumber] = useState("");
-  const [code, setCode] = useState("");
+  const [userHasNotPaid, setUserHasNotPaid] = useState(false);
+
+  // Get Auth Object
   const {user} = useUserAuth();
+
+  // Set references to documents and collections used here.
+  const today = new Date();
+  const transactionRef = collection(db, "transactions");
+  const userDocRef = doc(db, "users", String(user.uid));
+
+  const quarterStartDate = startOfQuarter(today);
+  const quarterEndDate = lastDayOfQuarter(today);
+
+  // Get all transactions for this user in the current fiscal quarter.
+  const userTrxsQuery = query(transactionRef,
+      where("user", "==", userDocRef),
+      where("transaction_type", "==", 1),
+      where("date", ">=", quarterStartDate),
+      where("date", "<=", quarterEndDate));
+
+  const [snapshot, loading, error] = useCollection(userTrxsQuery);
+
+  useEffect(() => {
+    if (snapshot) {
+      if (snapshot.empty) {
+        setUserHasNotPaid(true);
+      } else {
+        setUserHasNotPaid(false);
+      }
+    }
+  }, [snapshot]);
 
   const transactionData = {
     date: serverTimestamp(),
-    payment: amount,
+    payment: parseInt(amount),
     transaction_type: parseInt(paymentType),
-    user: doc(db, "users", String(user.uid)),
+    user: userDocRef,
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const transactionRef = collection(db, "transactions",);
     await addDoc(transactionRef, transactionData);
   };
+
   return (
     <MainLayout>
+      <div style={{marginBottom: "2vh"}}>
+        {userHasNotPaid ?
+          <Alert severity="warning">
+            <AlertTitle>Awaiting Payment</AlertTitle>
+            You have not paid your quarterly maintenance payment for
+            this quarter.
+            Payment is due by {format(quarterEndDate, "iii, LLLL do yyyy")}.
+          </Alert> :
+          <Alert severity="success">
+            <AlertTitle>Payment Successful</AlertTitle>
+            Thank you for submitting your quarterly maintenance payment.
+          </Alert>}
+      </div>
       <Header title="Make a Payment" />
       <form>
         <Box className={classes.content}>
@@ -133,10 +183,9 @@ export default function Payment() {
               placeholder="4444 4444 4444 4444"
               required={true}
               fullWidth={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCardNumber(event.target.value)
-              }
+              onChange={() => {
+                return 0;
+              }}
             />
           </Box>
           <Box className={classes.input}>
@@ -145,10 +194,9 @@ export default function Payment() {
               placeholder="MM/YY"
               required={true}
               fullWidth={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setDate(event.target.value)
-              }
+              onChange={() => {
+                return 0;
+              }}
             />
           </Box>
           <Box className={classes.input}>
@@ -157,16 +205,15 @@ export default function Payment() {
               placeholder="000"
               required={true}
               fullWidth={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setCode(event.target.value)
-              }
+              onChange={() => {
+                return 0;
+              }}
             />
           </Box>
           <Box className={classes.input}>
             <TextInput
               header="Payment Amount*"
-              placeholder="$1500"
+              placeholder="1500"
               required={true}
               fullWidth={true}
               onChange={
@@ -181,10 +228,9 @@ export default function Payment() {
               placeholder="For future me"
               required={false}
               fullWidth={true}
-              onChange={
-                (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setNote(event.target.value)
-              }
+              onChange={ () => {
+                return 0;
+              }}
             />
           </Box>
           <Box className={classes.submit}>
