@@ -180,14 +180,21 @@ export default function Settings() {
    */
   function ChecklistItem(props: Prop) {
     return (
-      <Box className={classes.checklist}>
+      <Box className={classes.checklist}
+        style={{
+          display: "flex",
+          justifyContent: "space-between",
+          width: "100%",
+          margin: "1vh",
+          paddingLeft: "1em",
+          paddingTop: "0.7em",
+          paddingBottom: "0.3em"}}>
         <Typography
-          style={{display: "inline-flex", marginRight: 50}}
           align="left"
           variant="body1">
           {props.todo}
         </Typography>
-        <Switch color="primary" style={{display: "inline-flex"}}/>
+        <Switch color="primary"/>
       </Box>
     );
   }
