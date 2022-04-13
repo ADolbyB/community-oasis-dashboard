@@ -56,8 +56,8 @@ const useStyles = makeStyles(() => ({
 export default function Surveys() {
   const navigate = useNavigate();
   const classes = useStyles();
-  const surveysRef = collection(db, "groups");
-  const [snapshot, loading, error] = useCollectionOnce(surveysRef);
+  const groupsRef = collection(db, "groups");
+  const [snapshot, loading, error] = useCollectionOnce(groupsRef);
 
   const createGroup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();

@@ -11,8 +11,15 @@ import {
   getFirestore,
   doc,
   updateDoc,
+  collection,
+  query,
+  where,
 } from "firebase/firestore";
-import {useDocument, useDocumentData} from "react-firebase-hooks/firestore";
+import {
+  useDocument,
+  useDocumentData,
+  useCollectionOnce,
+} from "react-firebase-hooks/firestore";
 import app from "../../firebase";
 
 // Layout
@@ -27,9 +34,12 @@ import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
+import Link from "@material-ui/core/Link";
 
 // Init firestore
 const db = getFirestore(app);
+
+const infoBlockVerticalPadding = 10;
 
 const useStyles = makeStyles(() => ({
   content: {
@@ -44,6 +54,13 @@ const useStyles = makeStyles(() => ({
   description: {
     marginTop: 15,
   },
+  infoBlockBackgroundGrey: {
+    background: "#C4C4C4",
+    paddingTop: infoBlockVerticalPadding,
+    paddingBottom: infoBlockVerticalPadding,
+    paddingLeft: 5,
+    marginRight: 30,
+  },
 }));
 
 /**
@@ -51,22 +68,43 @@ const useStyles = makeStyles(() => ({
  * @returns SurveyPopup
  */
 export default function Group() {
+  // CSS
   const classes = useStyles();
+
+  // React Route
   const navigate = useNavigate();
-  const [memberJoined, setMemberJoined] = useState(false);
   const location = useLocation();
-  const {user} = useUserAuth();
   const arr = location.pathname.split("/");
   const id = arr[2];
+
+  // useState
+  const [memberJoined, setMemberJoined] = useState(false);
+  const [membersArray, setMembersArray] = useState<Array<any>>();
+
+  // Auth
+  const {user} = useUserAuth();
+
+  // Groups Querys
   const groupRef = doc(db, "groups", id);
   const [snapshot, loading, error] = useDocument(groupRef);
+
+  // Group Date Query
   const [
     value,
     loadingData,
     errorData,
     snapshotData,
   ] = useDocumentData(groupRef);
-  const [membersArray, setMembersArray] = useState<Array<any>>();
+
+  // Events Query
+  const eventsRef = collection(db, "events");
+  const eventQuery = query(eventsRef, where("group_id", "==", id));
+  const [
+    collectionSnapshot,
+    collectionLoading,
+    collectionError
+  ] = useCollectionOnce(eventQuery);
+
 
   const membersData = {
     members: membersArray,
@@ -74,8 +112,8 @@ export default function Group() {
 
   const handleJoinGroup = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const tempMembersArray : any[] = snapshot?.data()?.members;
-    tempMembersArray.push(doc(db, "users/" + user.uid));
+    const tempMembersArray : any[] = snapshot?.data()?.members || [];
+    tempMembersArray.push(doc(db, "users/" + String(user.uid)));
     setMembersArray(tempMembersArray);
     await updateDoc(groupRef, membersData);
     navigate("/groups");
@@ -119,24 +157,45 @@ export default function Group() {
    * Allows you to create event
    * @returns CreateEvent
    */
-  function CreateEvent() {
+  function Event() {
     return (
-      <Box className={classes.submit}>
-        <Grid container justifyContent="center">
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateEvent}
-            type="submit"
-          >
-                Create Event
-          </Button>
-        </Grid>
-      </Box>
+      <>
+        <Box className={classes.submit}>
+          <Grid container justifyContent="center">
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCreateEvent}
+              type="submit"
+            >
+                  Create Event
+            </Button>
+          </Grid>
+        </Box>
+        <Box sx={{width: "100%", marginLeft: 15, marginTop: 30}}>
+          <Typography variant="h6">Upcoming Events</Typography>
+          <Grid container direction="column">
+            <Grid item className={classes.infoBlockBackgroundGrey}>
+              {collectionSnapshot?.docs.map((doc) => (
+                <React.Fragment key={doc.id}>
+                  <Box>
+                    <Link
+                      // href={`groups/${doc.id}`}
+                      variant="subtitle1"
+                      color="inherit"
+                    >
+                      {doc.data().title}
+                    </Link>
+                  </Box>
+                </React.Fragment>
+              ))}
+            </Grid>
+          </Grid>
+        </Box>
+      </>
     );
   }
 
-  // console.dir(value?.members[0].id);
   return (
     <MainLayout>
       <form>
@@ -151,7 +210,7 @@ export default function Group() {
               {snapshot?.data()?.description}
             </Typography>
           </Box>
-          {memberJoined ? <CreateEvent /> : <JoinButton />}
+          {memberJoined ? <Event /> : <JoinButton />}
         </Box>
       </form>
     </MainLayout>

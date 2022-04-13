@@ -1,6 +1,6 @@
 // React
 import React, {useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useLocation} from "react-router-dom";
 
 // Auth
 import {useUserAuth} from "../../../contexts/UserAuthContext";
@@ -12,6 +12,7 @@ import {
   addDoc,
   serverTimestamp,
   doc,
+  Timestamp,
 } from "firebase/firestore";
 import app from "../../../firebase";
 
@@ -20,6 +21,7 @@ import MainLayout from "../../../layouts/MainLayout";
 
 // Components
 import TextInput from "../../../components/TextInput";
+import CalendarInput from "../../../components/CalendarInput";
 
 // Material UI
 import Button from "@material-ui/core/Button";
@@ -27,7 +29,6 @@ import {makeStyles} from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
 import Typography from "@material-ui/core/Typography";
 import Grid from "@material-ui/core/Grid";
-import TextField from "@material-ui/core/TextField";
 
 // Init firestore
 const db = getFirestore(app);
@@ -58,25 +59,37 @@ const useStyles = makeStyles(() => ({
 export default function CreateEvent() {
   const classes = useStyles();
   const navigate = useNavigate();
-  const [groupName, setGroupName] = useState("");
+  const [eventTitle, setEventTitle] = useState("");
   const [description, setDescription] = useState("");
   const [address, setAddress] = useState("");
+  const [date, setDate] = useState<any>(
+      Timestamp.fromDate(new Date()).toDate(),
+  );
   const {user} = useUserAuth();
+  const location = useLocation();
+  const arr = location.pathname.split("/");
+  const id = arr[2];
 
-  const groupData = {
+  const handleDateChange = (newDate: Date | null) => {
+    setDate(newDate);
+  };
+
+  const eventData = {
     address: address,
+    created_by: doc(db, "users", String(user.uid)),
+    date_created: serverTimestamp(),
+    date_occuring: date,
     description: description,
-    group_owner: doc(db, "users", String(user.uid)),
-    name: groupName,
+    title: eventTitle,
+    group_id: id,
   };
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const groupRef = collection(db, "groups");
-    await addDoc(groupRef, groupData);
+    const eventRef = collection(db, "events");
+    await addDoc(eventRef, eventData);
     navigate("/groups");
   };
-
   return (
     <MainLayout>
       <form>
@@ -89,21 +102,21 @@ export default function CreateEvent() {
           </Typography>
           <Box className={classes.input}>
             <TextInput
-              header="Group Name"
-              placeholder="Brainiac book club"
+              header="Event title"
+              placeholder="Reading how to code badly for dummys"
               required={true}
               fullWidth={true}
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
-                  setGroupName(event.target.value)
+                  setEventTitle(event.target.value)
               }
             />
           </Box>
           <Box className={classes.input}>
             <TextInput
               header="Description"
-              placeholder="A group that pretends to
-              read and watches the movies instead!"
+              placeholder="Well drink some coffee and do a litte coding
+              but it will be poorly."
               fullWidth
               onChange={
                 (event: React.ChangeEvent<HTMLInputElement>) =>
@@ -122,6 +135,14 @@ export default function CreateEvent() {
                   setAddress(event.target.value)
               }
               required={true}
+            />
+          </Box>
+          <Box className={classes.input}>
+            <CalendarInput
+              header="Date Occuring"
+              required={true}
+              fullWidth={false}
+              onChange={handleDateChange}
             />
           </Box>
           <Box className={classes.submit}>
