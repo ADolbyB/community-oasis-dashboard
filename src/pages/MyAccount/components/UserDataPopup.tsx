@@ -68,6 +68,8 @@ export default function UserDataPopup() {
   const [licensePlate, setLicensePlate] = useState("");
   const [phone, setPhone] = useState("");
   const {user, updateDisplayName} = useUserAuth();
+  const userRef = doc(db, "users", String(user.uid));
+  const detailsRef = doc(db, "users", String(user.uid), "private", "details");
 
   const handleClose = () => {
     setOpen(false);
@@ -88,8 +90,6 @@ export default function UserDataPopup() {
 
   const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const userRef = doc(db, "users", String(user.uid));
-    const detailsRef = doc(db, "users", String(user.uid), "private", "details");
     await updateDisplayName(firstName, lastName);
     await updateDoc(userRef, userData);
     await updateDoc(detailsRef, detailsData);
@@ -193,7 +193,7 @@ export default function UserDataPopup() {
                   onClick={handleSubmit}
                   type="submit"
                 >
-                        Submit
+                  Submit
                 </Button>
               </Grid>
             </Box>

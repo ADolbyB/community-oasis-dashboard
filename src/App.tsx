@@ -25,6 +25,7 @@ import Groups from "./pages/Groups/Groups";
 import CreateGroup from "./pages/Groups/CreateGroup";
 import Group from "./pages/Groups/Group";
 import CreateEvent from "./pages/Groups/GroupEvents/CreateEvent";
+import Admin from "./pages/Admin/Admin";
 
 /**
  * Starts the web application
@@ -85,6 +86,11 @@ function App() {
           <Route path="/report-issue" element={
             <ProtectedRoute>
               <ReportIssue />
+            </ProtectedRoute>
+          } />
+          <Route path="/admin" element={
+            <ProtectedRoute>
+              <Admin />
             </ProtectedRoute>
           } />
           <Route path="/settings" element={

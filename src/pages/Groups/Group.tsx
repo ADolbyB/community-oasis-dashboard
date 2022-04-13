@@ -88,7 +88,7 @@ export default function Group() {
   const groupRef = doc(db, "groups", id);
   const [snapshot, loading, error] = useDocument(groupRef);
 
-  // Group Date Query
+  // Group Data Query
   const [
     value,
     loadingData,
@@ -102,7 +102,7 @@ export default function Group() {
   const [
     collectionSnapshot,
     collectionLoading,
-    collectionError
+    collectionError,
   ] = useCollectionOnce(eventQuery);
 
 
