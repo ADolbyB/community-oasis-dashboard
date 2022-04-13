@@ -20,5 +20,4 @@ ReactDOM.render(
       </Router>
     </MuiThemeProvider>,
     document.getElementById("root")
-
 );
