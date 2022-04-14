@@ -61,6 +61,9 @@ const useStyles = makeStyles({
     paddingLeft: 5,
     marginRight: 30,
   },
+  list: {
+    margin: 30,
+  },
 });
 
 /**
@@ -129,40 +132,38 @@ export default function MyAccount() {
             required={false}
           />
         </Box>
-        <Box>
+        <Box className={classes.list}>
           <Typography variant="h6">Upcoming Events</Typography>
           <Grid container direction="column">
             <Grid item className={classes.infoBlockBackgroundGrey}>
               {eventsSnapshot?.docs.map((doc) => (
                 <React.Fragment key={doc.id}>
                   <Box>
-                    <Link
-                      // href={`groups/${doc.id}`}
+                    <Typography
                       variant="subtitle1"
                       color="inherit"
                     >
-                      {doc.data().title}
-                    </Link>
+                      Title: {doc.data().title}
+                    </Typography>
                   </Box>
                 </React.Fragment>
               ))}
             </Grid>
           </Grid>
         </Box>
-        <Box>
+        <Box className={classes.list}>
           <Typography variant="h6">Community Issues</Typography>
           <Grid container direction="column">
             <Grid item className={classes.infoBlockBackgroundGrey}>
               {issuesSnapshot?.docs.map((doc) => (
                 <React.Fragment key={doc.id}>
                   <Box>
-                    <Link
-                      // href={`groups/${doc.id}`}
+                    <Typography
                       variant="subtitle1"
                       color="inherit"
                     >
                       {doc.data().title}
-                    </Link>
+                    </Typography>
                   </Box>
                 </React.Fragment>
               ))}

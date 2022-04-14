@@ -179,13 +179,12 @@ export default function Group() {
               {collectionSnapshot?.docs.map((doc) => (
                 <React.Fragment key={doc.id}>
                   <Box>
-                    <Link
-                      // href={`groups/${doc.id}`}
+                    <Typography
                       variant="subtitle1"
                       color="inherit"
                     >
                       {doc.data().title}
-                    </Link>
+                    </Typography>
                   </Box>
                 </React.Fragment>
               ))}
