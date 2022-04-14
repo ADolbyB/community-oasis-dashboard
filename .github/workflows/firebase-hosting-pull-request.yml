@@ -8,6 +8,7 @@ jobs:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Create .env file
         uses: SpicyPizza/create-envfile@1.3.0
         with:
@@ -18,9 +19,8 @@ jobs:
           envkey_MESSAGING_SENDER_ID: ${{secrets.MESSAGING_SENDER_ID}}
           envkey_APP_ID: ${{secrets.APP_ID}}
           envkey_MEASUREMENT_ID: ${{secrets.MEASUREMENT_ID}}
-      - uses: FirebaseExtended/action-hosting-deploy@v0
-      - uses: actions/checkout@v2
       - run: npm ci && npm --prefix functions ci && npm run build
+      - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_OASIS_RETIREMENT }}'

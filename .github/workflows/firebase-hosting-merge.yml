@@ -10,6 +10,7 @@ jobs:
   build_and_deploy:
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v2
       - name: Create .env file
         uses: SpicyPizza/create-envfile@1.3.0
         with:
@@ -20,7 +21,6 @@ jobs:
           envkey_MESSAGING_SENDER_ID: ${{secrets.MESSAGING_SENDER_ID}}
           envkey_APP_ID: ${{secrets.APP_ID}}
           envkey_MEASUREMENT_ID: ${{secrets.MEASUREMENT_ID}}
-      - uses: actions/checkout@v2
       - run: npm ci && npm --prefix functions ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
