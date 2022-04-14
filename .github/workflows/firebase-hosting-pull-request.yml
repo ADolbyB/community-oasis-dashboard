@@ -9,7 +9,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - run: npm ci && npm run build
+      - name: Create .env file
+        uses: SpicyPizza/create-envfile@1.3.0
+        with:
+          envkey_API_KEY: ${{secrets.API_KEY}}
+          envkey_AUTH_DOMAIN: ${{secrets.AUTH_DOMAIN}}
+          envkey_PROJECT_ID: ${{secrets.PROJECT_ID}}
+          envkey_STORAGE_BUCKET: ${{secrets.STORAGE_BUCKET}}
+          envkey_MESSAGING_SENDER_ID: ${{secrets.MESSAGING_SENDER_ID}}
+          envkey_APP_ID: ${{secrets.APP_ID}}
+          envkey_MEASUREMENT_ID: ${{secrets.MEASUREMENT_ID}}
+      - run: npm ci && npm --prefix functions ci && npm run build
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'

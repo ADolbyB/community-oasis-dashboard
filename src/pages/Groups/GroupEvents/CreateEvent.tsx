@@ -78,7 +78,7 @@ export default function CreateEvent() {
     address: address,
     created_by: doc(db, "users", String(user.uid)),
     date_created: serverTimestamp(),
-    date_occuring: date,
+    date_occuring: serverTimestamp(),
     description: description,
     title: eventTitle,
     group_id: id,

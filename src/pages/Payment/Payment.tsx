@@ -92,6 +92,7 @@ export default function Payment() {
   const [paymentType, setPaymentType] = useState("");
   const [amount, setAmount] = useState("");
   const [userHasNotPaid, setUserHasNotPaid] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   // Get Auth Object
   const {user} = useUserAuth();
@@ -123,6 +124,13 @@ export default function Payment() {
     }
   }, [snapshot]);
 
+  useEffect(() => {
+    if (error) {
+      const msg = `Error: ${error.message}`;
+      setErrorMessage(msg);
+    }
+  }, [error]);
+
   const transactionData = {
     date: serverTimestamp(),
     payment: parseInt(amount),
@@ -137,8 +145,9 @@ export default function Payment() {
 
   return (
     <MainLayout>
+      <p>{errorMessage}</p>
       <div style={{marginBottom: "2vh"}}>
-        {userHasNotPaid ?
+        {!loading && (userHasNotPaid ?
           <Alert severity="warning">
             <AlertTitle>Awaiting Payment</AlertTitle>
             You have not paid your quarterly maintenance payment for
@@ -148,7 +157,8 @@ export default function Payment() {
           <Alert severity="success">
             <AlertTitle>Payment Successful</AlertTitle>
             Thank you for submitting your quarterly maintenance payment.
-          </Alert>}
+          </Alert>)
+        }
       </div>
       <Header title="Make a Payment" />
       <form>
