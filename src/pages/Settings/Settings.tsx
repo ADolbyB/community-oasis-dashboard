@@ -302,8 +302,8 @@ export default function Settings() {
           Checklist
       </Typography>
       <Box sx={{width: "50vh", margin: "auto"}}>
-        <ChecklistItem todo="Grab keys from front desk"/>
-        <ChecklistItem todo="Grab gate entry card"/>
+        <ChecklistItem todo="Obtain keys from front desk"/>
+        <ChecklistItem todo="Obtain gate entry card"/>
         <ChecklistItem todo="Take picture for community id"/>
         <ChecklistItem todo="Visit club house"/>
       </Box>
