@@ -56,7 +56,7 @@ const useStyles = makeStyles(() => ({
  * A web page view for account management
  * @returns My account page view
  */
-export default function MyAccount() {
+export default function Admin() {
   const classes = useStyles();
   const [users, setUsers] = useState<Array<any>>([]);
 
