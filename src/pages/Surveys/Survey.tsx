@@ -115,12 +115,12 @@ export default function Survey() {
                         onChange={handleRadioChange}
                       >
                         <FormControlLabel
-                          value="true"
+                          value="Yes"
                           control={<Radio />}
                           label="True"
                         />
                         <FormControlLabel
-                          value="false"
+                          value="No"
                           control={<Radio />}
                           label="False"
                         />
