@@ -13,7 +13,6 @@ env:
   APP_ID: ${{secrets.APP_ID}}
   MEASUREMENT_ID: ${{secrets.MEASUREMENT_ID}}
 
-
 jobs:
   build_and_preview:
     if: '${{ github.event.pull_request.head.repo.full_name == github.repository }}'
@@ -35,3 +34,4 @@ jobs:
           repoToken: '${{ secrets.GITHUB_TOKEN }}'
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_OASIS_RETIREMENT }}'
           projectId: oasis-retirement
+          expires: 1d
