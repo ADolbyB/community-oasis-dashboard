@@ -7,6 +7,8 @@ import {useUserAuth} from "../../../contexts/UserAuthContext";
 // Firestore
 import {
   getFirestore,
+  addDoc,
+  collection,
 } from "firebase/firestore";
 import app from "../../../firebase";
 
@@ -68,7 +70,7 @@ export default function CreateUserPopup() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const {signUp} = useUserAuth();
-  // const userRef = doc(db, "users");
+  const userRef = collection(db, "users");
   // const detailsRef = doc(db, "users", props.id, "private", "details");
 
   const handleClose = () => {
@@ -78,11 +80,18 @@ export default function CreateUserPopup() {
     setOpen(true);
   };
 
+  const userData = {
+    first_name: firstName,
+    last_name: lastName,
+    privilege: 0,
+  };
+
   const handleSubmit = async (
       e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
     await signUp(email, password);
+    await addDoc(userRef, userData);
     await handleClose();
   };
 
