@@ -69,7 +69,6 @@ export default function CreateUserPopup() {
   const [lastName, setLastName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {signUp} = useUserAuth();
   const userRef = collection(db, "users");
   // const detailsRef = doc(db, "users", props.id, "private", "details");
 
@@ -90,7 +89,6 @@ export default function CreateUserPopup() {
       e: React.MouseEvent<HTMLButtonElement>,
   ) => {
     e.preventDefault();
-    await signUp(email, password);
     await addDoc(userRef, userData);
     await handleClose();
   };
